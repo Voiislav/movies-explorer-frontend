@@ -1,11 +1,11 @@
 .search {
-  width: 100%;
-  max-width: 1140px;
+  width: 89%;
   display: flex;
-  border-bottom: 1px solid #e8e8e8;
+  justify-content: space-between;
   padding: 47px 0 13px 0;
   box-sizing: border-box;
   margin-bottom: 33px;
+  border-bottom: 1px solid #e8e8e8;
 }
 
 .search__input {
@@ -39,7 +39,7 @@
 
 @media screen and (max-width: 768px) {
   .search {
-    max-width: 708px;
+    width: 708px;
     padding-top: 80px;
     margin-bottom: 30px;
   }

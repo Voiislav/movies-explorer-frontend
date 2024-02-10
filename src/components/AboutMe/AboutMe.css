@@ -1,0 +1,162 @@
+.student {
+  display: flex;
+  flex-direction: column;
+  padding: 110px 70px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.student__title {
+  border-bottom: 1px solid #000;
+  padding-bottom: 23px;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.88px;
+  align-self: flex-start;
+  width: 100%;
+  margin: 0 0 66px 0;
+}
+
+.student__content {
+  display: flex;
+  gap: 270px;
+  align-items: center;
+}
+
+.student__info {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+.student__name {
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -2px;
+  margin: 0;
+}
+
+.student__profession {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.11;
+  margin-bottom: 8px;
+}
+
+.student__about {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.57;
+  max-width: 600px;
+  margin-bottom: 81px;
+}
+
+.student__photo {
+  width: 270px;
+  height: 100%;
+  min-height: 327px;
+  border-radius: 10px;
+  background-image: url(../../images/student-voiislav.png);
+  background-size: cover;
+  background-position: center bottom;
+}
+
+.student__link {
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s all ease;
+}
+
+.student__link:hover {
+  transition: 0.3s all ease;
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 768px) {
+  .student {
+    padding: 90px 50px 0 50px;
+  }
+
+  .student__info {
+    gap: 16px;
+  }
+
+  .student__content {
+    gap: 49px;
+  }
+
+  .student__name {
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: -1.6px;
+  }
+
+  .student__profession {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+
+  .student__about {
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 71px;
+    max-width: 364px;
+  }
+
+  .student__photo {
+    width: 255px;
+    min-height: 307px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .student {
+    padding: 70px 14px;
+  }
+
+  .student__title {
+    padding-bottom: 28px;
+    margin-bottom: 60px;
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  .student__content {
+    flex-direction: column-reverse;
+    gap: 40px;
+  }
+
+  .student__photo {
+    width: 100%;
+    height: 352px;
+  }
+
+  .student__name {
+    font-size: 30px;
+    letter-spacing: -1.2px;
+  }
+
+  .student__info {
+    gap: 20px;
+  }
+
+  .student__profession {
+    font-size: 11px;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .student__about {
+    font-size: 11px;
+    line-height: 1.45;
+    margin-bottom: 20px;
+  }
+}

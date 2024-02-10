@@ -1,0 +1,72 @@
+.movie {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.movie__caption {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.movie__title {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.21;
+  margin: 0;
+}
+
+.movie__button {
+  background-color: #f9f9f9;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  padding: 8px 7px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.movie__button_delete {
+  opacity: 0;
+}
+
+.movie__button_delete:hover {
+  opacity: 1;
+}
+
+.movie__time {
+  margin: 0;
+  padding-top: 6px;
+  border-top: 1px solid #e8e8e8;
+  font-size: 11px;
+  line-height: 1.21;
+  font-weight: 400;
+  color: #a0a0a0;
+}
+
+@media screen and (max-width: 320px) {
+  .movie {
+    gap: 15px;
+  }
+
+  .movie__title {
+    font-size: 12px;
+  }
+
+  .movie__caption {
+    margin-bottom: 14px;
+  }
+
+  .movie__time {
+    font-size: 10px;
+  }
+
+  .movie__button_delete {
+    opacity: 1;
+  }
+}
+

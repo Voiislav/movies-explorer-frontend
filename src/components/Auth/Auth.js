@@ -11,7 +11,7 @@ function Auth({ titleText, submitButtonText, clarificationText, linkText, linkPa
       {showNameInput && (
           <>
             <label htmlFor='name' className='authorization__label'>Имя</label>
-            <input type='text' className='authorization__input' id='name' placeholder='Введите имя' required></input>
+            <input minLength={2} maxLength={30} type='text' className='authorization__input' id='name' placeholder='Введите имя' required></input>
           </>
         )}
         <label htmlFor='email' className='authorization__label'>E-mail</label>

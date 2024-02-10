@@ -20,8 +20,8 @@
 
 .student__content {
   display: flex;
-  gap: 270px;
   align-items: center;
+  justify-content: space-between;
 }
 
 .student__info {
@@ -79,6 +79,12 @@
   opacity: 0.6;
 }
 
+@media screen and (max-width: 1000px) {
+  .student__info {
+    max-width: 364px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .student {
     padding: 90px 50px 0 50px;
@@ -86,10 +92,7 @@
 
   .student__info {
     gap: 16px;
-  }
-
-  .student__content {
-    gap: 49px;
+    max-width: 364px;
   }
 
   .student__name {
@@ -114,10 +117,12 @@
   .student__photo {
     width: 255px;
     min-height: 307px;
+    height: 100%;
+    align-self: flex-start;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 430px) {
   .student {
     padding: 70px 14px;
   }

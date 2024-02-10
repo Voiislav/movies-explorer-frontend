@@ -21,9 +21,11 @@ function Movies() {
   return (
     <>
       <Header authorized={true} />
+      <main>
       <SearchForm />
       <FilterCheckbox />
       {isLoading ? <Preloader /> : <MoviesCardList numberOfCards={16} />}
+      </main>
       <Footer />
     </>
   );

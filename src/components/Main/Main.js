@@ -12,11 +12,13 @@ function Main() {
       <Header
       authorized={true}
       ></Header>
+      <main>
       <Promo></Promo>
       <AboutProject></AboutProject>
       <Techs></Techs>
       <AboutMe></AboutMe>
       <Portfolio></Portfolio>
+      </main>
       <Footer></Footer>
     </>
   );

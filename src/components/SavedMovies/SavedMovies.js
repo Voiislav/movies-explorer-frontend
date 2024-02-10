@@ -9,9 +9,11 @@ function SavedMovies() {
     <>
       <Header
       authorized={true} />
+      <main>
       <SearchForm />
       <FilterCheckbox />
       <MoviesCardList numberOfCards={3} />
+      </main>
       <Footer />
     </>
   );

@@ -4,7 +4,7 @@
   align-items: center;
   gap: 14px;
   align-self: flex-start;
-  padding: 0 0 47px 70px;
+  padding: 0 0 47px 0;
 }
 
 .filter__label {
@@ -51,7 +51,7 @@
   .filter {
     align-self: flex-end;
     flex-direction: row;
-    padding: 0 30px 60px 0;
+    padding: 0 0 60px 0;
     gap: 16px;
   }
 

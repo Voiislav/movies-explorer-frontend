@@ -1,3 +1,4 @@
+import './Main.css';
 import Header from '../Header/Header';
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
@@ -12,7 +13,7 @@ function Main() {
       <Header
       authorized={true}
       ></Header>
-      <main>
+      <main className='main'>
       <Promo></Promo>
       <AboutProject></AboutProject>
       <Techs></Techs>

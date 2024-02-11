@@ -21,7 +21,7 @@ function Movies() {
   return (
     <>
       <Header authorized={true} />
-      <main>
+      <main className='movies-main'>
       <SearchForm />
       <FilterCheckbox />
       {isLoading ? <Preloader /> : <MoviesCardList numberOfCards={16} />}

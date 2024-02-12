@@ -1,0 +1,36 @@
+.profile-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 3px;
+  gap: 7px;
+  text-decoration: none;
+  color: #000000;
+  width: 100px;
+  background-color: #2BE080;
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.08;
+  transition: 0.3s all ease;
+}
+
+.profile-link_white {
+  background-color: #FFFFFF;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.05);
+}
+
+.profile-link:hover {
+  transition: 0.3s all ease;
+  opacity: 0.6;
+}
+
+.profile-link__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F9F9F9;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+}

@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'Inter';
+  font-weight: 400;
+  src: url(../../vendor/fonts/Inter-Regular.woff2);
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-weight: 500;
+  src: url(../../vendor/fonts/Inter-Medium.woff2);
+}
+
+.page {
+  font-family: 'Inter';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+}

@@ -9,10 +9,13 @@ function MoviesCardList({ movies }) {
   return (
     <section className='movies'>
       <ul className='movies__list'>
-      {movies.map((movie, movieId) => (
+      {movies.map((movie) => (
             <MoviesCard
               movie={movie}
-              key={movieId}
+              key={movie.id}
+              name={movie.nameRU}
+              duration={movie.duration}
+              image={movie.image}
             />
           ))}
       </ul>

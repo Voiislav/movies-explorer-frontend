@@ -4,7 +4,7 @@ import heartIcon from '../../images/heart-icon.svg';
 import deleteIcon from '../../images/delete-icon.svg';
 import { useLocation } from 'react-router-dom';
 
-function MoviesCard() {
+function MoviesCard({ name, duration, image }) {
   const location = useLocation();
   const isSavedMoviesRoute = location.pathname === '/saved-movies';
   const movieButton = isSavedMoviesRoute ? (
@@ -17,14 +17,18 @@ function MoviesCard() {
     </button>
   );
 
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+  const imageUrl = `https://api.nomoreparties.co/${image.url}`;
+
   return (
     <figure className='movie'>
-      <img className='movie__image' src='' alt='Кадр из фильма ...' />
+      <img className='movie__image' src={imageUrl} alt={"Кадр из фильма " + name} width={image.width} height={image.height}/>
       <figcaption className='movie__caption'>
-        <h2 className='movie__title'></h2>
+        <h2 className='movie__title'>{name}</h2>
         {movieButton}
       </figcaption>
-      <p className='movie__time'></p>
+      <p className='movie__time'>{hours}ч{minutes}мин</p>
     </figure>
   );
 };

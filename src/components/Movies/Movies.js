@@ -11,16 +11,19 @@ import moviesApi from '../../utils/MoviesApi';
 function Movies() {
   const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     Promise.all([moviesApi.getAllMovies()])
-    .then(([moviesData]) => {
-      setIsLoading(false);
-      setMovies(moviesData);
-    })
-    .catch((error) => {
-      console.error(error);
-    })
+      .then(([moviesData]) => {
+        setIsLoading(false);
+        setMovies(moviesData);
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        setErrorMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+        console.error(error);
+      })
   }, [])
 
   return (
@@ -29,7 +32,7 @@ function Movies() {
       <main className='movies-main'>
         <SearchForm />
         <FilterCheckbox />
-        {isLoading ? <Preloader /> : <MoviesCardList movies={movies} />}
+        {isLoading ? <Preloader /> : (errorMessage ? <p>{errorMessage}</p> : <MoviesCardList movies={movies} />)}
       </main>
       <Footer />
     </>

@@ -4,7 +4,7 @@ import heartIcon from '../../images/heart-icon.svg';
 import deleteIcon from '../../images/delete-icon.svg';
 import { useLocation } from 'react-router-dom';
 
-function MoviesCard({ name, duration, image }) {
+function MoviesCard({ name, duration, image, trailerLink }) {
   const location = useLocation();
   const isSavedMoviesRoute = location.pathname === '/saved-movies';
   const movieButton = isSavedMoviesRoute ? (
@@ -21,9 +21,13 @@ function MoviesCard({ name, duration, image }) {
   const minutes = duration % 60;
   const imageUrl = `https://api.nomoreparties.co/${image.url}`;
 
+  const moveToTrailer = () => {
+    window.open(trailerLink, '_blank');
+  }
+
   return (
     <figure className='movie'>
-      <img className='movie__image' src={imageUrl} alt={"Кадр из фильма " + name} width={image.width} height={image.height}/>
+      <button className='movie__trailer-button' onClick={moveToTrailer}><img className='movie__image' src={imageUrl} alt={"Кадр из фильма " + name} width={image.width} height={image.height}/></button>
       <figcaption className='movie__caption'>
         <h2 className='movie__title'>{name}</h2>
         {movieButton}

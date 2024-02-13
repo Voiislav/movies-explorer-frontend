@@ -16,6 +16,7 @@ function MoviesCardList({ movies }) {
               name={movie.nameRU}
               duration={movie.duration}
               image={movie.image}
+              trailerLink={movie.trailerLink}
             />
           ))}
       </ul>

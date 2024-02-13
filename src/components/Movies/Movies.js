@@ -10,7 +10,7 @@ import moviesApi from '../../utils/MoviesApi';
 
 function Movies() {
   const [isLoading, setIsLoading] = useState(true);
-  const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     Promise.all([moviesApi.getAllMovies()])

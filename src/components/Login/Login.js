@@ -1,5 +1,5 @@
 import Auth from '../Auth/Auth';
-import * as auth from "../auth.js";
+import * as auth from "../../auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 

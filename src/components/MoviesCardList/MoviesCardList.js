@@ -11,7 +11,6 @@ function MoviesCardList({ movies }) {
       <ul className='movies__list'>
       {movies.map((movie) => (
             <MoviesCard
-              movie={movie}
               key={movie.id}
               name={movie.nameRU}
               duration={movie.duration}

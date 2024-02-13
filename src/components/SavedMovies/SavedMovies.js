@@ -6,6 +6,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 function SavedMovies() {
+  const movies = [];
   return (
     <>
       <Header
@@ -13,7 +14,7 @@ function SavedMovies() {
       <main className='saved-main'>
       <SearchForm />
       <FilterCheckbox />
-      <MoviesCardList numberOfCards={3} />
+      <MoviesCardList movies={movies} />
       </main>
       <Footer />
     </>

@@ -39,7 +39,7 @@ function MoviesCard({ name, duration, image, trailerLink }) {
 
   return (
     <figure className='movie'>
-      <button className='movie__trailer-button' onClick={moveToTrailer}><img className='movie__image' src={imageUrl} alt={"Кадр из фильма " + name} width={image.width} height={image.height}/></button>
+      <button className='movie__trailer-button' onClick={moveToTrailer}><img className='movie__image' src={imageUrl} alt={"Кадр из фильма " + name} width={image.width} height={image.height} /></button>
       <figcaption className='movie__caption'>
         <h2 className='movie__title'>{name}</h2>
         {movieButton}

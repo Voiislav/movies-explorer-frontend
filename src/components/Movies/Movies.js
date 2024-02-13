@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -9,30 +9,51 @@ import Footer from '../Footer/Footer';
 import moviesApi from '../../utils/MoviesApi';
 
 function Movies() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [notFoundMessage, setNotFoundMessage] = useState('');
 
-  useEffect(() => {
-    Promise.all([moviesApi.getAllMovies()])
-      .then(([moviesData]) => {
+  const handleSearch = (searchQuery) => {
+    setIsLoading(true);
+    moviesApi.getAllMovies()
+      .then((moviesData) => {
         setIsLoading(false);
-        setMovies(moviesData);
+        const filteredMovies = moviesData.filter((movie) => {
+          const nameRU = movie.nameRU.toLowerCase();
+          const nameEN = movie.nameEN.toLowerCase();
+          const query = searchQuery.toLowerCase();
+          return nameRU.includes(query) || nameEN.includes(query);
+        });
+        setMovies(filteredMovies);
+        if (filteredMovies.length === 0) {
+          setNotFoundMessage('Ничего не найдено');
+        } else {
+          setNotFoundMessage('');
+        }
       })
       .catch((error) => {
         setIsLoading(false);
-        setErrorMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+        setErrorMessage(
+          'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
+        );
         console.error(error);
-      })
-  }, [])
+      });
+  };
 
   return (
     <>
       <Header authorized={true} />
       <main className='movies-main'>
-        <SearchForm />
+        <SearchForm onSearch={handleSearch} />
         <FilterCheckbox />
-        {isLoading ? <Preloader /> : (errorMessage ? <p>{errorMessage}</p> : <MoviesCardList movies={movies} />)}
+        {isLoading ?
+          <Preloader /> :
+          (errorMessage ?
+            <p className='movies-main__error'>{errorMessage}</p> :
+            (notFoundMessage ?
+              <p className='movies-main__error'>{notFoundMessage}</p> :
+              <MoviesCardList movies={movies} />))}
       </main>
       <Footer />
     </>

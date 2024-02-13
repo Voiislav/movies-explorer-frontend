@@ -6,6 +6,15 @@
   padding: 0 70px;
 }
 
+.movies-main__error {
+  text-align: center;
+  margin: 0;
+  color: #A0A0A0;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.21;
+}
+
 @media screen and (max-width: 768px) {
   .movies-main {
     padding: 0 30px;

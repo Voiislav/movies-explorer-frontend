@@ -11,6 +11,31 @@ export class MainApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  getUserData() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+      credentials: 'include',
+    })
+    .then(this._checkResponse)
+  }
+
+  setNewUserData({
+    name,
+    email
+  }) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify({
+        name: name,
+        email: email,
+      })
+    })
+    .then(this._checkResponse)
+  }
+
+
   saveMovie({
     country,
     director,

@@ -6,25 +6,31 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
+import moviesApi from '../../utils/MoviesApi';
 
 function Movies() {
   const [isLoading, setIsLoading] = useState(true);
+  const [movies, setMovies] = useState([])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    Promise.all([moviesApi.getAllMovies()])
+    .then(([moviesData]) => {
       setIsLoading(false);
-    }, 2000); // имитируем задержку загрузки, чтобы протестировать прелоадер
-
-    return () => clearTimeout(timer);
-  }, []);
+      setMovies(moviesData);
+      console.log(moviesData);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }, [])
 
   return (
     <>
       <Header authorized={true} />
       <main className='movies-main'>
-      <SearchForm />
-      <FilterCheckbox />
-      {isLoading ? <Preloader /> : <MoviesCardList numberOfCards={16} />}
+        <SearchForm />
+        <FilterCheckbox />
+        {isLoading ? <Preloader /> : <MoviesCardList movies={movies} />}
       </main>
       <Footer />
     </>

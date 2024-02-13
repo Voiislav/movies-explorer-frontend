@@ -1,6 +1,5 @@
 import React from 'react';
 import './MoviesCard.css';
-import movieImage from '../../images/movie-img.png';
 import heartIcon from '../../images/heart-icon.svg';
 import deleteIcon from '../../images/delete-icon.svg';
 import { useLocation } from 'react-router-dom';
@@ -20,12 +19,12 @@ function MoviesCard() {
 
   return (
     <figure className='movie'>
-      <img className='movie__image' src={movieImage} alt='Кадр из фильма ...' />
+      <img className='movie__image' src='' alt='Кадр из фильма ...' />
       <figcaption className='movie__caption'>
-        <h2 className='movie__title'>33 слова о дизайне</h2>
+        <h2 className='movie__title'></h2>
         {movieButton}
       </figcaption>
-      <p className='movie__time'>1ч42м</p>
+      <p className='movie__time'></p>
     </figure>
   );
 };

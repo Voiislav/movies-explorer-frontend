@@ -17,7 +17,6 @@ function Movies() {
     .then(([moviesData]) => {
       setIsLoading(false);
       setMovies(moviesData);
-      console.log(moviesData);
     })
     .catch((error) => {
       console.error(error);

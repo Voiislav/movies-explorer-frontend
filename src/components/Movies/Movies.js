@@ -50,14 +50,16 @@ function Movies() {
   };
   
 
-  const handleCheckboxChange = (isShortFilmChecked) => {
-    setIsShortFilmChecked(isShortFilmChecked);
-    handleSearch(searchQuery, isShortFilmChecked);
+  const handleCheckboxChange = (isChecked) => {
+    setIsShortFilmChecked(isChecked);
+    if (searchQuery) {
+      handleSearch(searchQuery, isChecked);
+    }
   };
 
   const handleSearchFormSubmit = (query) => {
     setSearchQuery(query);
-    handleSearch(query);
+    handleSearch(query, isShortFilmChecked);
   };
 
   return (

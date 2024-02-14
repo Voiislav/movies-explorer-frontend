@@ -14,7 +14,7 @@ function Movies() {
   const [errorMessage, setErrorMessage] = useState('');
   const [notFoundMessage, setNotFoundMessage] = useState('');
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(localStorage.getItem('searchQuery') !== null ? localStorage.getItem('searchQuery') : '');
 
   useEffect(() => {
     const storedSearchQuery = localStorage.getItem('searchQuery');

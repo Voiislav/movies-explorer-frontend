@@ -11,6 +11,13 @@ export class MainApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  getSavedMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      headers: this._headers
+    })
+    .then(this._checkResponse)
+  }
+
   getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,

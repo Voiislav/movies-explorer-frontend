@@ -7,15 +7,26 @@ function MoviesCardList({ movies }) {
   const location = useLocation();
   const isMoviesRoute = location.pathname === '/movies';
 
-  const [visibleCards, setVisibleCards] = useState(4);
+  const calculateVisibleCards = () => {
+    const screenWidth = window.innerWidth;
+    if (screenWidth >= 1280) {
+      return 16;
+    } else if (screenWidth >= 768) {
+      return 8;
+    } else {
+      return 5;
+    }
+  };
+
+  const [visibleCards, setVisibleCards] = useState(calculateVisibleCards());
 
   const handleLoadMore = () => {
-    setVisibleCards(prevVisibleCards => prevVisibleCards + (window.innerWidth <= 480 ? 2 : 4));
+    setVisibleCards(prevVisibleCards => prevVisibleCards + (window.innerWidth <= 768 ? 2 : 4));
   };
 
   useEffect(() => {
     const handleResize = () => {
-      setVisibleCards(4);
+      setVisibleCards(calculateVisibleCards());
     };
 
     window.addEventListener('resize', handleResize);

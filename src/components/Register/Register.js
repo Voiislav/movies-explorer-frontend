@@ -26,7 +26,7 @@ function Register() {
       .register(formValue.email, formValue.password, formValue.name)
       .then((res) => {
         if (res && !res.error) {
-          navigate('/sign-in');
+          navigate('/movies');
         }
       })
       .catch((err) => {

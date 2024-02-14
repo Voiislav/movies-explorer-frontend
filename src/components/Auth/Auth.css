@@ -65,6 +65,26 @@
   cursor: pointer;
 }
 
+.authorization__submit_disabled {
+  opacity: 0.6;
+  cursor: default;
+  transition: none;
+  background-color: #A0A0A0;
+}
+
+.authorization__submit_disabled:hover {
+  opacity: 0.6;
+  transition: none;
+}
+
+.authorization__error {
+  color: #FF3055;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.21;
+  margin: 0;
+}
+
 .authorization__submit:hover {
   transition: 0.3s all ease;
   opacity: 0.6;

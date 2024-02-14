@@ -31,7 +31,7 @@ function Login({ handleLogin }) {
           setFormValue({ email: "", password: "" });
         }
         handleLogin();
-        navigate("/", { replace: true });
+        navigate("/movies", { replace: true });
       })
       .catch((err) => {
         if (err.status === 400) {

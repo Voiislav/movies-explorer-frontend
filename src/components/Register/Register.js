@@ -10,6 +10,8 @@ function Register() {
     name: "",
   });
 
+  const [submitError, setSubmitError] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (evt) => {
@@ -19,7 +21,6 @@ function Register() {
       [name]: value,
     });
   }
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
     auth
@@ -30,9 +31,19 @@ function Register() {
         }
       })
       .catch((err) => {
-        if (err.status === 400) {
-          console.log("400 - некорректно заполнено одно из полей");
+        let errorMessage;
+        switch (err.status) {
+          case 400:
+            errorMessage = "400 - некорректно заполнено одно из полей";
+            break;
+          case 500:
+            errorMessage = "500 - ошибка сервера";
+            break;
+          default:
+            errorMessage = "Произошла ошибка при регистрации";
+            break;
         }
+        setSubmitError(errorMessage);
       });
   }
 
@@ -46,6 +57,7 @@ function Register() {
       linkText='Войти'
       linkPath='/signin'
       showNameInput={true}
+      submitError={submitError}
     ></Auth>
   );
 };

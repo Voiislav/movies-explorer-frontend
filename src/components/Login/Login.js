@@ -11,6 +11,8 @@ function Login({ handleLogin }) {
 
   const navigate = useNavigate();
 
+  const [submitError, setSubmitError] = useState("");
+
   const handleChange = (evt) => {
     const { name, value } = evt.target;
     setFormValue({
@@ -34,12 +36,22 @@ function Login({ handleLogin }) {
         navigate("/movies", { replace: true });
       })
       .catch((err) => {
-        if (err.status === 400) {
-          console.log("400 - не передано одно из полей");
+        let errorMessage;
+        switch (err.status) {
+          case 400:
+            errorMessage = "400 - некорректно заполнено одно из полей";
+            break;
+            case 401:
+            errorMessage = "401 - почта или пароль не верны";
+            break;
+          case 500:
+            errorMessage = "500 - ошибка сервера";
+            break;
+          default:
+            errorMessage = "Произошла ошибка при регистрации";
+            break;
         }
-        if (err.status === 401) {
-          console.log("401 - пользователь с таким email не найден");
-        }
+        setSubmitError(errorMessage);
       });
   }
 
@@ -53,6 +65,7 @@ function Login({ handleLogin }) {
     linkText='Регистрация'
     linkPath='/signup'
     showNameInput={false}
+    submitError={submitError}
     ></Auth>
   );
 };

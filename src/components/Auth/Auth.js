@@ -3,7 +3,7 @@ import './Auth.css';
 import logo from '../../images/circle-logo.svg';
 import { Link } from 'react-router-dom';
 
-function Auth({ handleSubmit, titleText, submitButtonText, clarificationText, linkText, linkPath, showNameInput }) {
+function Auth({ handleSubmit, titleText, submitButtonText, clarificationText, linkText, linkPath, showNameInput, submitError }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -94,6 +94,7 @@ function Auth({ handleSubmit, titleText, submitButtonText, clarificationText, li
         <label htmlFor='password' className='authorization__label'>Пароль</label>
         <input onChange={handlePasswordChange} type='password' className='authorization__input' id='password' placeholder='Введите пароль' required></input>
         <p className='authorization__error'>{passwordError}</p>
+        {submitError && <p className='authorization__error'>{submitError}</p>}
         <button type='submit' className={`authorization__submit ${isButtonDisabled ? 'authorization__submit_disabled' : ''}`} id='auth-submit' disabled={isButtonDisabled}>{submitButtonText}</button>
       </form>
       <p className='authorization__link'>{clarificationText} <Link to={linkPath} className='authorization__link authorization__link_interactive'>{linkText}</Link></p>

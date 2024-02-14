@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -13,19 +13,27 @@ function Movies() {
   const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [notFoundMessage, setNotFoundMessage] = useState('');
+  const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = (searchQuery) => {
+  const handleSearch = (query, isShortFilmChecked) => {
     setIsLoading(true);
     moviesApi.getAllMovies()
       .then((moviesData) => {
         setIsLoading(false);
-        const filteredMovies = moviesData.filter((movie) => {
+        let filteredMovies = moviesData.filter((movie) => {
           const nameRU = movie.nameRU.toLowerCase();
           const nameEN = movie.nameEN.toLowerCase();
-          const query = searchQuery.toLowerCase();
-          return nameRU.includes(query) || nameEN.includes(query);
+          const search = query.toLowerCase();
+          return nameRU.includes(search) || nameEN.includes(search);
         });
+  
+        if (isShortFilmChecked) {
+          filteredMovies = filteredMovies.filter(movie => movie.duration <= 40);
+        }
+  
         setMovies(filteredMovies);
+  
         if (filteredMovies.length === 0) {
           setNotFoundMessage('Ничего не найдено');
         } else {
@@ -40,13 +48,24 @@ function Movies() {
         console.error(error);
       });
   };
+  
+
+  const handleCheckboxChange = (isShortFilmChecked) => {
+    setIsShortFilmChecked(isShortFilmChecked);
+    handleSearch(searchQuery, isShortFilmChecked);
+  };
+
+  const handleSearchFormSubmit = (query) => {
+    setSearchQuery(query);
+    handleSearch(query);
+  };
 
   return (
     <>
       <Header authorized={true} />
       <main className='movies-main'>
-        <SearchForm onSearch={handleSearch} />
-        <FilterCheckbox />
+        <SearchForm onSearch={handleSearchFormSubmit} />
+        <FilterCheckbox onCheckboxChange={handleCheckboxChange} />
         {isLoading ?
           <Preloader /> :
           (errorMessage ?
@@ -61,3 +80,4 @@ function Movies() {
 };
 
 export default Movies;
+

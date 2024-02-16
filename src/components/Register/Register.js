@@ -21,6 +21,7 @@ function Register() {
       [name]: value,
     });
   }
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     auth
@@ -44,6 +45,7 @@ function Register() {
             break;
         }
         setSubmitError(errorMessage);
+        console.log(errorMessage);
       });
   }
 

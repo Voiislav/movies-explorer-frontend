@@ -3,7 +3,7 @@ import './Auth.css';
 import logo from '../../images/circle-logo.svg';
 import { Link } from 'react-router-dom';
 
-function Auth({ handleSubmit, titleText, submitButtonText, clarificationText, linkText, linkPath, showNameInput, submitError }) {
+function Auth({ handleSubmit, handleChange, titleText, submitButtonText, clarificationText, linkText, linkPath, showNameInput, submitError }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,6 +20,7 @@ function Auth({ handleSubmit, titleText, submitButtonText, clarificationText, li
   const handleNameChange = (evt) => {
     const value = evt.target.value;
     setName(value);
+    handleChange(evt);
     validateName(value);
     validateButton();
   };
@@ -27,6 +28,7 @@ function Auth({ handleSubmit, titleText, submitButtonText, clarificationText, li
   const handleEmailChange = (evt) => {
     const value = evt.target.value;
     setEmail(value);
+    handleChange(evt);
     validateEmail(value);
     validateButton();
   };
@@ -34,6 +36,7 @@ function Auth({ handleSubmit, titleText, submitButtonText, clarificationText, li
   const handlePasswordChange = (evt) => {
     const value = evt.target.value;
     setPassword(value);
+    handleChange(evt);
     validatePassword(value);
     validateButton();
   };

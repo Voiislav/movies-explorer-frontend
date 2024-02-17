@@ -20,7 +20,7 @@ function Auth({ handleSubmit, handleChange, titleText, submitButtonText, clarifi
   const handleNameChange = (evt) => {
     const value = evt.target.value;
     setName(value);
-    handleChange(evt);
+    handleChange({...evt, target: { ...evt.target, name: 'name', value }});
     validateName(value);
     validateButton();
   };
@@ -28,7 +28,7 @@ function Auth({ handleSubmit, handleChange, titleText, submitButtonText, clarifi
   const handleEmailChange = (evt) => {
     const value = evt.target.value;
     setEmail(value);
-    handleChange(evt);
+    handleChange({...evt, target: { ...evt.target, name: 'email', value }});
     validateEmail(value);
     validateButton();
   };
@@ -36,8 +36,8 @@ function Auth({ handleSubmit, handleChange, titleText, submitButtonText, clarifi
   const handlePasswordChange = (evt) => {
     const value = evt.target.value;
     setPassword(value);
-    handleChange(evt);
     validatePassword(value);
+    handleChange({...evt, target: { ...evt.target, name: 'password', value }});
     validateButton();
   };
 

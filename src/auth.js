@@ -8,6 +8,7 @@ const request = (url, options) => {
 
 
 export const register = (email, password, name) => {
+  console.log(name);
   return request(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {

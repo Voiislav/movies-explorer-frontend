@@ -20,7 +20,7 @@ function Register() {
       ...formValue,
       [name]: value,
     });
-  }
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -52,7 +52,6 @@ function Register() {
   return (
     <Auth
       handleSubmit={handleSubmit}
-      handleChange={handleChange}
       titleText='Добро пожаловать!'
       submitButtonText='Зарегистрироваться'
       clarificationText='Уже зарегистрированы?'
@@ -60,6 +59,7 @@ function Register() {
       linkPath='/signin'
       showNameInput={true}
       submitError={submitError}
+      handleChange={handleChange}
     ></Auth>
   );
 };

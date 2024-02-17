@@ -11,6 +11,7 @@ function MoviesCard({ name, duration, image, trailerLink }) {
   const isSavedMoviesRoute = location.pathname === '/saved-movies';
 
   const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
@@ -21,6 +22,19 @@ function MoviesCard({ name, duration, image, trailerLink }) {
     .then((savedMovie) => {
       console.log(savedMovie);
       toggleLike();
+      setIsSaved(true);
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }
+
+  const handleDelete = (movieId) => {
+    mainApi.deleteMovie(movieId)
+    .then((deletedMovie) => {
+      console.log(deletedMovie);
+      toggleLike();
+      setIsSaved(false);
     })
     .catch((error) => {
       console.error(error);
@@ -28,11 +42,11 @@ function MoviesCard({ name, duration, image, trailerLink }) {
   }
 
   const movieButton = isSavedMoviesRoute ? (
-    <button className='movie__button movie__button_delete' type='button' aria-label='Удалить'>
+    <button className='movie__button movie__button_delete' type='button' aria-label='Удалить' onClick={() => handleDelete(movieId)}>
       <img className='movie__delete-icon' src={deleteIcon} alt='иконка крестика' />
     </button>
   ) : (
-    <button className='movie__button' type='button' aria-label='Сохранить' onClick={handleSave}>
+    <button className='movie__button' type='button' aria-label='Сохранить' onClick={isSaved ? () => handleDelete(movieId) : handleSave}>
       {isLiked ? (
         <img src={heartIconClicked} alt='иконка сердечка' />
       ) : (

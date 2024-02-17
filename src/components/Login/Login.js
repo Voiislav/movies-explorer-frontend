@@ -3,7 +3,7 @@ import * as auth from "../../auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 
-function Login({ handleLogin }) {
+function Login() {
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -32,7 +32,6 @@ function Login({ handleLogin }) {
         if (data.token) {
           setFormValue({ email: "", password: "" });
         }
-        handleLogin();
         navigate("/movies", { replace: true });
       })
       .catch((err) => {

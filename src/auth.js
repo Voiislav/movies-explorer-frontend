@@ -35,10 +35,33 @@ export const authorize = (email, password) => {
   })
     .then((data) => {
       if (data.token) {
-        localStorage.setItem("token", data.token);
+        setCookie("token", data.token, { path: "/", expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) });
         return data;
       }
     })
+};
+
+const setCookie = (name, value, options) => {
+  options = {
+    path: '/',
+    ...options
+  };
+
+  if (options.expires instanceof Date) {
+    options.expires = options.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  for (let optionKey in options) {
+    updatedCookie += "; " + optionKey;
+    let optionValue = options[optionKey];
+    if (optionValue !== true) {
+      updatedCookie += "=" + optionValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
 };
 
 export const checkToken = (token) => {

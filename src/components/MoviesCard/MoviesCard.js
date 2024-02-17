@@ -4,6 +4,7 @@ import heartIcon from '../../images/heart-icon.svg';
 import deleteIcon from '../../images/delete-icon.svg';
 import heartIconClicked from '../../images/heart-icon-clicked.svg';
 import { useLocation } from 'react-router-dom';
+import mainApi from '../../utils/MainApi';
 
 function MoviesCard({ name, duration, image, trailerLink }) {
   const location = useLocation();
@@ -15,12 +16,23 @@ function MoviesCard({ name, duration, image, trailerLink }) {
     setIsLiked(!isLiked);
   }
 
+  const handleSave = (movieData) => {
+    mainApi.saveMovie(movieData)
+    .then((savedMovie) => {
+      console.log(savedMovie);
+      toggleLike();
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+  }
+
   const movieButton = isSavedMoviesRoute ? (
     <button className='movie__button movie__button_delete' type='button' aria-label='Удалить'>
       <img className='movie__delete-icon' src={deleteIcon} alt='иконка крестика' />
     </button>
   ) : (
-    <button className='movie__button' type='button' aria-label='Сохранить' onClick={toggleLike}>
+    <button className='movie__button' type='button' aria-label='Сохранить' onClick={handleSave}>
       {isLiked ? (
         <img src={heartIconClicked} alt='иконка сердечка' />
       ) : (

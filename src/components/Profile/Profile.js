@@ -35,6 +35,10 @@ function Profile() {
         });
   }, []);
 
+  useEffect(() => {
+    validateButton();
+  }, [name, email]);
+
   const handleEditProfile = (e) => {
     e.preventDefault();
     mainApi.setNewUserData({

@@ -34,22 +34,18 @@ function Register({ setIsAuth }) {
       })
       .catch((err) => {
         let errorMessage;
-        switch (err.status) {
-          case 400:
-            errorMessage = "400 - некорректно заполнено одно из полей";
+        switch (err) {
+          case 'Ошибка 400':
+            errorMessage = "Некорректно заполнено одно из полей";
             break;
-          case 500:
-            errorMessage = "500 - ошибка сервера";
+          case 'Ошибка 500':
+            errorMessage = "Ошибка сервера";
             break;
-            case 409:
-              errorMessage = "409 - пользователь уже зарегистрирован";
-              break;  
           default:
             errorMessage = "Произошла ошибка при регистрации";
             break;
         }
         setSubmitError(errorMessage);
-        console.log(errorMessage);
       });
   }
 

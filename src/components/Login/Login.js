@@ -37,18 +37,18 @@ function Login({ setIsAuth }) {
       })
       .catch((err) => {
         let errorMessage;
-        switch (err.status) {
-          case 400:
-            errorMessage = "400 - некорректно заполнено одно из полей";
+        switch (err) {
+          case 'Ошибка 400':
+            errorMessage = "Некорректно заполнено одно из полей";
             break;
-            case 401:
-            errorMessage = "401 - почта или пароль не верны";
+            case 'Ошибка 401':
+            errorMessage = "Почта или пароль не верны";
             break;
-          case 500:
-            errorMessage = "500 - ошибка сервера";
+          case 'Ошибка 500':
+            errorMessage = "Ошибка сервера";
             break;
           default:
-            errorMessage = "Произошла ошибка при регистрации";
+            errorMessage = "Произошла ошибка при попытке входа";
             break;
         }
         setSubmitError(errorMessage);

@@ -28,6 +28,7 @@
   display: flex;
   gap: 147px;
   justify-content: space-between;
+  position: relative;
 }
 
 .profile__input {
@@ -45,6 +46,23 @@
   margin-bottom: 220px;
 }
 
+.profile__error {
+  position: absolute;
+  right: 0;
+  top: 15px;
+  color: #FF3055;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.21;
+  margin: 0;
+}
+
+.profile__error_bottom {
+  position: absolute;
+  right: 0;
+  top: 35px;
+}
+
 .profile__button {
   border: none;
   background: none;
@@ -54,6 +72,11 @@
   line-height: 1.21;
   transition: 0.3s all ease;
   padding: 0;
+}
+
+.profile__button_disabled {
+  opacity: 0.3;
+  cursor: default;
 }
 
 .profile__button:hover {

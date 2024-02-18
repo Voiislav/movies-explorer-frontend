@@ -10,6 +10,9 @@ function Profile() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const [onEdit, setOnEdit] = useState(false);
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   useEffect((token) => {
       checkToken(token)
@@ -48,10 +51,42 @@ function Profile() {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
+    validateName(e.target.value);
+    validateButton();
   };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+    validateEmail(e.target.value);
+    validateButton();
+  };
+
+  const validateName = (value) => {
+    if (!value) {
+      setNameError('');
+    } else if (!value.match(/^[A-Za-zА-Яа-яЁё\s-]+$/)) {
+      setNameError('Некорректный формат имени');
+    } else if (value.length < 2 || value.length > 30) {
+      setNameError('Имя должно содержать от 2 до 30 символов');
+    } else {
+      setNameError('');
+    }
+  };
+
+  const validateEmail = (value) => {
+    if (!value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+      setEmailError('Введите корректный адрес почты');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const validateButton = () => {
+    if (nameError || emailError || !name || !email) {
+      setOnEdit(false);
+    } else {
+      setOnEdit(true);
+    }
   };
 
   return (
@@ -68,6 +103,8 @@ function Profile() {
                 <label className='profile__label' htmlFor='name'>Имя</label>
                 <input
                   type='text'
+                  minLength={2}
+                  maxLength={30}
                   className='profile__input'
                   id='name'
                   value={name}
@@ -75,6 +112,7 @@ function Profile() {
                   placeholder='Введите новое имя'
                   required
                 />
+                <p className='profile__error'>{nameError}</p>
               </div>
               <div className='profile__inputs-area profile__inputs-area_bottom'>
                 <label className='profile__label' htmlFor='email'>E-mail</label>
@@ -87,8 +125,9 @@ function Profile() {
                   placeholder='Введите новый адрес электронной почты'
                   required
                 />
+                <p className='profile__error profile__error_bottom'>{emailError}</p>
               </div>
-              <button className='profile__button' type='submit' aria-label='Редактировать профиль'>Редактировать</button>
+              <button className={`profile__button ${onEdit ? '' : 'profile__button_disabled'}`} type='submit' aria-label='Редактировать профиль' disabled={!onEdit}>Редактировать</button>
             </form>
             <button className='profile__button profile__button_exit' type='button' aria-label='Выйти из аккаунта'>Выйти из аккаунта</button>
           </>

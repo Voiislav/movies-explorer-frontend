@@ -3,7 +3,7 @@ import * as auth from "../../auth";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Register() {
+function Register({ setIsAuth }) {
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -29,6 +29,7 @@ function Register() {
       .then((res) => {
         if (res && !res.error) {
           navigate('/movies');
+          setIsAuth(true);
         }
       })
       .catch((err) => {

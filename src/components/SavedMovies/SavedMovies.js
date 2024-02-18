@@ -5,12 +5,12 @@ import SearchForm from '../SearchForm/SearchForm';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function SavedMovies() {
+function SavedMovies({ isAuth }) {
   const movies = [];
   return (
     <>
       <Header
-      authorized={true} />
+      authorized={isAuth} />
       <main className='saved-main'>
       <SearchForm />
       <FilterCheckbox />

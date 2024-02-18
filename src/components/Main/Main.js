@@ -7,11 +7,11 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
-function Main() {
+function Main({ isAuth }) {
   return (
     <>
       <Header
-      authorized={true}
+      authorized={isAuth}
       ></Header>
       <main className='main'>
       <Promo></Promo>

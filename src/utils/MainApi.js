@@ -42,7 +42,6 @@ export class MainApi {
     .then(this._checkResponse)
   }
 
-
   saveMovie({
     country,
     director,
@@ -90,7 +89,7 @@ export class MainApi {
 const mainApi = new MainApi({
   baseUrl: 'https://api.moomovies.nomoredomainsmonster.ru',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   }
 });
 

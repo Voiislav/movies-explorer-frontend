@@ -1,7 +1,7 @@
 import './App.css';
 import '../../vendor/normalize.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -9,11 +9,25 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import ErrorPage from '../ErrorPage/ErrorPage';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import mainApi from '../../utils/MainApi';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    Promise.all([mainApi.getUserData()])
+      .then(([userData]) => {
+        setCurrentUser(userData);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
+    <CurrentUserContext.Provider value={currentUser}>
     <div className="page">
       <Router>
         <Routes>
@@ -27,6 +41,7 @@ function App() {
         </Routes>
       </Router>
     </div>
+    </CurrentUserContext.Provider>
   );
 }
 

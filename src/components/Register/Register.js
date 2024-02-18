@@ -38,6 +38,9 @@ function Register({ setIsAuth }) {
           case 'Ошибка 400':
             errorMessage = "Некорректно заполнено одно из полей";
             break;
+          case 'Ошибка 409':
+            errorMessage = "Пользователь с такой почтой уже зарегистрирован";
+            break;
           case 'Ошибка 500':
             errorMessage = "Ошибка сервера";
             break;

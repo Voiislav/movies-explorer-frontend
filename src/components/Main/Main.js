@@ -8,6 +8,7 @@ import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 
 function Main({ isAuth }) {
+  
   return (
     <>
       <Header

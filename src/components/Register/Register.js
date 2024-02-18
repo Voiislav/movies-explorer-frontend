@@ -28,8 +28,8 @@ function Register({ setIsAuth }) {
       .register(formValue.email, formValue.password, formValue.name)
       .then((res) => {
         if (res && !res.error) {
-          navigate('/movies');
           setIsAuth(true);
+          navigate('/movies');
         }
       })
       .catch((err) => {
@@ -41,6 +41,9 @@ function Register({ setIsAuth }) {
           case 500:
             errorMessage = "500 - ошибка сервера";
             break;
+            case 409:
+              errorMessage = "409 - пользователь уже зарегистрирован";
+              break;  
           default:
             errorMessage = "Произошла ошибка при регистрации";
             break;

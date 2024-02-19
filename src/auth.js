@@ -22,6 +22,26 @@ export const register = (email, password, name) => {
   })
 };
 
+const saveTokenToCookie = (token) => {
+  document.cookie = `token=${token}; path=/;`;
+};
+
+const getTokenFromCookie = () => {
+  const name = 'token=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const cookieArray = decodedCookie.split(';');
+  for(let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i];
+    while (cookie.charAt(0) === ' ') {
+      cookie = cookie.substring(1);
+    }
+    if (cookie.indexOf(name) === 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return '';
+};
+
 export const authorize = (email, password) => {
   return request(`${BASE_URL}/signin`, {
     method: "POST",
@@ -36,7 +56,7 @@ export const authorize = (email, password) => {
     .then((data) => {
       if (data.token) {
         const token = data.token;
-        saveCookie("token", token); // Сохраняем токен в куки
+        saveTokenToCookie(token);
         console.log(token);
         return data;
       }
@@ -44,7 +64,7 @@ export const authorize = (email, password) => {
 };
 
 export const checkToken = () => {
-  const token = getCookie("token"); // Получаем токен из куки
+  const token = getTokenFromCookie();
   console.log(token)
   return request(`${BASE_URL}/users/me`, {
     method: "GET",
@@ -55,27 +75,6 @@ export const checkToken = () => {
     },
   })
     .then((data) => data)
-};
-
-// Функция для сохранения токена в куки
-const saveCookie = (name, value) => {
-  document.cookie = `${name}=Bearer ${value}; path=/`;
-};
-
-// Функция для получения куки по имени
-const getCookie = (name) => {
-  const nameEQ = name + "=";
-  const ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) === ' ') {
-      c = c.substring(1, c.length);
-    }
-    if (c.indexOf(nameEQ) === 0) {
-      return c.substring(nameEQ.length, c.length);
-    }
-  }
-  return null;
 };
 
 

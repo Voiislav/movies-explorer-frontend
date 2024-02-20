@@ -1,3 +1,5 @@
+import { getTokenFromLocalStorage } from "../auth";
+
 export class MainApi {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -13,7 +15,7 @@ export class MainApi {
 
   getSavedMovies() {
     return fetch(`${this._baseUrl}/movies`, {
-      headers: this._headers
+      headers: this._headers,
     })
     .then(this._checkResponse)
   }
@@ -21,7 +23,6 @@ export class MainApi {
   getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-      credentials: 'include',
     })
     .then(this._checkResponse)
   }
@@ -33,7 +34,6 @@ export class MainApi {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
-      credentials: 'include',
       body: JSON.stringify({
         name: name,
         email: email,
@@ -59,7 +59,6 @@ export class MainApi {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'POST',
       headers: this._headers,
-      credentials: 'include',
       body: JSON.stringify({
         country: country,
         director: director,
@@ -82,7 +81,6 @@ export class MainApi {
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
         method: 'DELETE',
         headers: this._headers,
-        credentials: 'include',
       })
       .then(this._checkResponse)
   }
@@ -92,6 +90,7 @@ const mainApi = new MainApi({
   baseUrl: 'https://api.moomovies.nomoredomainsmonster.ru',
   headers: {
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${getTokenFromLocalStorage()}`,
   }
 });
 

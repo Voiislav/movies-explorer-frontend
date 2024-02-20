@@ -40,13 +40,13 @@ function Profile({ setIsAuth }) {
       .then(() => {
         mainApi.getUserData()
           .then((data) => {
-            setIsAuth(true);
             setUserData(data);
             setName(data.name);
             setEmail(data.email);
             setIsLoading(false);
             setOriginalName(data.name);
             setOriginalEmail(data.email);
+            setIsAuth(true);
           })
           .catch((error) => {
             console.error('Ошибка при получении данных пользователя:', error);

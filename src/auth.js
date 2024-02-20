@@ -6,6 +6,19 @@ const request = (url, options) => {
   return fetch(url, options).then(checkResponse);
 }
 
+export const saveTokenToLocalStorage = (token) => {
+  localStorage.setItem("token", token);
+};
+
+export const getTokenFromLocalStorage = () => {
+  return localStorage.getItem("token");
+};
+
+export const removeTokenFromLocalStorage = () => {
+  localStorage.removeItem("token");
+}
+
+
 export const register = (email, password, name) => {
   return request(`${BASE_URL}/signup`, {
     method: "POST",
@@ -35,6 +48,7 @@ export const authorize = (email, password) => {
       if (data.token) {
         const token = data.token;
         saveTokenToLocalStorage(token);
+        console.log(saveTokenToLocalStorage(token))
       }
       return data;
     });
@@ -52,18 +66,5 @@ export const checkToken = () => {
   })
     .then((data) => data);
 };
-
-export const saveTokenToLocalStorage = (token) => {
-  localStorage.setItem("token", token);
-};
-
-export const getTokenFromLocalStorage = () => {
-  return localStorage.getItem("token");
-};
-
-export const removeTokenFromLocalStorage = () => {
-  localStorage.removeItem("token");
-}
-
 
 

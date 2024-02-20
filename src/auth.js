@@ -42,6 +42,7 @@ export const authorize = (email, password) => {
 
 export const checkToken = () => {
   const token = getTokenFromLocalStorage();
+  console.log(token);
   return request(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
@@ -59,6 +60,10 @@ export const saveTokenToLocalStorage = (token) => {
 export const getTokenFromLocalStorage = () => {
   return localStorage.getItem("token");
 };
+
+export const removeTokenFromLocalStorage = () => {
+  localStorage.removeItem("token");
+}
 
 
 

@@ -1,6 +1,6 @@
 import './App.css';
 import '../../vendor/normalize.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Navigate, BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -36,7 +36,7 @@ function App() {
           <Route path="/" element={<Main isAuth={isAuth} />} />
           <Route path="/signup" element={<Register setIsAuth={setIsAuth} />} />
           <Route path="/signin" element={<Login setIsAuth={setIsAuth} />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile setIsAuth={setIsAuth} />} />
           <Route path="/movies" element={<Movies isAuth={isAuth} />} />
           <Route path="/saved-movies" element={<SavedMovies isAuth={isAuth} />} />
           <Route path="*" element={<ErrorPage />} />

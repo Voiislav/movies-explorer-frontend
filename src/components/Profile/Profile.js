@@ -1,11 +1,13 @@
 import './Profile.css';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import { checkToken } from '../../auth'; // Импортируем функцию проверки токена
 import mainApi from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
+import { removeTokenFromLocalStorage } from '../../auth';
 
-function Profile() {
+function Profile({ setIsAuth }) {
   const [userData, setUserData] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -15,6 +17,7 @@ function Profile() {
   const [emailError, setEmailError] = useState('');
   const [originalName, setOriginalName] = useState('');
   const [originalEmail, setOriginalEmail] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userData) {
@@ -37,6 +40,7 @@ function Profile() {
       .then(() => {
         mainApi.getUserData()
           .then((data) => {
+            setIsAuth(true);
             setUserData(data);
             setName(data.name);
             setEmail(data.email);
@@ -115,6 +119,12 @@ function Profile() {
     }
   };
 
+  const handleSignOut = () => {
+    removeTokenFromLocalStorage();
+    setIsAuth(false);
+    navigate('/', { replace: true });
+  }
+
   return (
     <>
       <Header authorized={true} />
@@ -155,7 +165,7 @@ function Profile() {
               </div>
               <button className={`profile__button ${onEdit ? '' : 'profile__button_disabled'}`} type='submit' aria-label='Редактировать профиль' disabled={!onEdit}>Редактировать</button>
             </form>
-            <button className='profile__button profile__button_exit' type='button' aria-label='Выйти из аккаунта'>Выйти из аккаунта</button>
+            <button className='profile__button profile__button_exit' type='button' aria-label='Выйти из аккаунта' onClick={handleSignOut}>Выйти из аккаунта</button>
           </>
         )}
       </section>

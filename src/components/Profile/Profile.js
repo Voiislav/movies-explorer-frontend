@@ -13,31 +13,51 @@ function Profile() {
   const [onEdit, setOnEdit] = useState(false);
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [originalName, setOriginalName] = useState('');
+  const [originalEmail, setOriginalEmail] = useState('');
+
+  useEffect(() => {
+    if (userData) {
+      setOriginalName(userData.name);
+      setOriginalEmail(userData.email);
+      validateButton();
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (userData) {
+      setOriginalName(userData.name);
+      setOriginalEmail(userData.email);
+      validateButton();
+    }
+  }, [userData]);
 
   useEffect((token) => {
-      checkToken(token)
-        .then(() => {
-          mainApi.getUserData()
-            .then((data) => {
-              setUserData(data);
-              setName(data.name);
-              setEmail(data.email);
-              setIsLoading(false);
-            })
-            .catch((error) => {
-              console.error('Ошибка при получении данных пользователя:', error);
-              setIsLoading(false);
-            });
-        })
-        .catch((error) => {
-          console.error('Ошибка при проверке токена:', error);
-          setIsLoading(false);
-        });
+    checkToken(token)
+      .then(() => {
+        mainApi.getUserData()
+          .then((data) => {
+            setUserData(data);
+            setName(data.name);
+            setEmail(data.email);
+            setIsLoading(false);
+            setOriginalName(data.name);
+            setOriginalEmail(data.email);
+          })
+          .catch((error) => {
+            console.error('Ошибка при получении данных пользователя:', error);
+            setIsLoading(false);
+          });
+      })
+      .catch((error) => {
+        console.error('Ошибка при проверке токена:', error);
+        setIsLoading(false);
+      });
   }, []);
 
   useEffect(() => {
     validateButton();
-  }, [name, email]);
+  }, [name, email, originalName, originalEmail]);
 
   const handleEditProfile = (e) => {
     e.preventDefault();
@@ -47,6 +67,8 @@ function Profile() {
     })
       .then((data) => {
         console.log('Данные профиля успешно обновлены:', data);
+        setOriginalName(name);
+        setOriginalEmail(email);
       })
       .catch((error) => {
         console.error('Ошибка при обновлении данных профиля:', error);
@@ -86,7 +108,7 @@ function Profile() {
   };
 
   const validateButton = () => {
-    if (nameError || emailError || !name || !email) {
+    if (nameError || emailError || !name || !email || (name === originalName && email === originalEmail)) {
       setOnEdit(false);
     } else {
       setOnEdit(true);
@@ -142,6 +164,7 @@ function Profile() {
 }
 
 export default Profile;
+
 
 
 

@@ -59,6 +59,7 @@ export class MainApi {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'POST',
       headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({
         country: country,
         director: director,
@@ -80,7 +81,8 @@ export class MainApi {
   deleteMovie(movieId) {
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
         method: 'DELETE',
-        headers: this._headers
+        headers: this._headers,
+        credentials: 'include',
       })
       .then(this._checkResponse)
   }

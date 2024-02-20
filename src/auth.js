@@ -23,7 +23,7 @@ export const register = (email, password, name) => {
 };
 
 const saveTokenToCookie = (token) => {
-  document.cookie = `token=${token}; path=/;`;
+  document.cookie = `token=${token}; path=/; SameSite=None; Secure`;
 };
 
 const getTokenFromCookie = () => {

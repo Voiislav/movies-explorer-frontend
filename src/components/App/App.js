@@ -20,7 +20,8 @@ function App() {
     Promise.all([mainApi.getUserData()])
       .then((userData) => {
         setCurrentUser(userData);
-        console.log(userData)
+        setIsAuth(true);
+        console.log(userData);
       })
       .catch((error) => {
         console.error(error);

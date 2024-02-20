@@ -57,7 +57,6 @@ export const authorize = (email, password) => {
       if (data.token) {
         const token = data.token;
         saveTokenToCookie(token);
-        console.log(token);
         return data;
       }
     })
@@ -65,7 +64,6 @@ export const authorize = (email, password) => {
 
 export const checkToken = () => {
   const token = getTokenFromCookie();
-  console.log(token)
   return request(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {

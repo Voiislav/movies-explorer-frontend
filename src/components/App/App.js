@@ -18,8 +18,9 @@ function App() {
 
   useEffect(() => {
     Promise.all([mainApi.getUserData()])
-      .then(([userData]) => {
+      .then((userData) => {
         setCurrentUser(userData);
+        console.log(userData)
       })
       .catch((error) => {
         console.error(error);

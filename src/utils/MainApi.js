@@ -1,5 +1,3 @@
-import { getTokenFromLocalStorage } from "../auth";
-
 export class MainApi {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -89,7 +87,7 @@ const mainApi = new MainApi({
   baseUrl: 'https://api.moomovies.nomoredomainsmonster.ru',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${getTokenFromLocalStorage()}`,
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
   }
 });
 

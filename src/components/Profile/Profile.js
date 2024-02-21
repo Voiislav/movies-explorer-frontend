@@ -5,9 +5,8 @@ import Header from '../Header/Header';
 import { checkToken } from '../../auth';
 import mainApi from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
-import { removeTokenFromLocalStorage } from '../../auth';
 
-function Profile({ setIsAuth }) {
+function Profile({ setIsAuth, isAuth }) {
   const [userData, setUserData] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -120,13 +119,14 @@ function Profile({ setIsAuth }) {
   };
 
   const handleSignOut = () => {
+    localStorage.removeItem('token');
     setIsAuth(false);
     navigate('/', { replace: true });
   }
 
   return (
     <>
-      <Header authorized={true} />
+      <Header authorized={isAuth} />
       <section className='profile'>
         {isLoading ? (
           <Preloader />

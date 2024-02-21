@@ -12,17 +12,21 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import mainApi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { checkToken } from '../../auth';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
-    Promise.all([mainApi.getUserData()])
+    checkToken()
+      .then(() => {
+        setIsAuth(true);
+        return mainApi.getUserData();
+      })
       .then((userData) => {
         setCurrentUser(userData);
-        setIsAuth(true);
-        console.log(userData);
+        console.log(userData)
       })
       .catch((error) => {
         console.error(error);

@@ -50,13 +50,12 @@ export class MainApi {
     description,
     image,
     trailerLink,
-    thumbnail,
     owner,
-    movieId,
+    id,
     nameRU,
     nameEN
   }) {
-    return fetch(`${this._baseUrl}/movies`, {
+    return fetch(`${this._baseUrl}/movies/movies`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -65,11 +64,11 @@ export class MainApi {
         duration: duration,
         year: year,
         description: description,
-        image: image,
+        image: `https://api.nomoreparties.co/${image.url}`,
         trailerLink: trailerLink,
-        thumbnail: thumbnail,
+        thumbnail: `https://api.nomoreparties.co/${image.formats.thumbnail.url}`,
         owner: owner,
-        movieId: movieId,
+        movieId: id,
         nameRU: nameRU,
         nameEN: nameEN
       })

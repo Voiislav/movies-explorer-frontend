@@ -2,7 +2,7 @@ import './Profile.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
-import { checkToken } from '../../auth'; // Импортируем функцию проверки токена
+import { checkToken } from '../../auth';
 import mainApi from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
 import { removeTokenFromLocalStorage } from '../../auth';
@@ -120,7 +120,6 @@ function Profile({ setIsAuth }) {
   };
 
   const handleSignOut = () => {
-    removeTokenFromLocalStorage();
     setIsAuth(false);
     navigate('/', { replace: true });
   }

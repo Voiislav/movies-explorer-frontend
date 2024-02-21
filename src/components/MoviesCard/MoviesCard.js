@@ -18,6 +18,7 @@ function MoviesCard({ movie }) {
   }
 
   const handleSave = () => {
+    console.log(movie);
     mainApi.saveMovie(movie)
     .then((savedMovie) => {
       console.log(savedMovie);

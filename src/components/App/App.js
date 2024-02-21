@@ -10,7 +10,6 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import ErrorPage from '../ErrorPage/ErrorPage';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import mainApi from '../../utils/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { checkToken } from '../../auth';
 
@@ -36,8 +35,8 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Main isAuth={isAuth} />} />
-            <Route path="/signup" element={<Register setIsAuth={setIsAuth} />} />
-            <Route path="/signin" element={<Login setIsAuth={setIsAuth} />} />
+            <Route path="/signup" element={<ProtectedRoute element={<Register setIsAuth={setIsAuth} />} isAuth={!isAuth} />} />
+            <Route path="/signin" element={<ProtectedRoute element={<Login setIsAuth={setIsAuth} />} isAuth={!isAuth} />} />
             <Route
               path="/profile"
               element={

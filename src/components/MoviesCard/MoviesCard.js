@@ -71,14 +71,17 @@ function MoviesCard({ movie }) {
   const hours = Math.floor(movie.duration / 60);
   const minutes = movie.duration % 60;
   const imageUrl = `https://api.nomoreparties.co/${movie.image.url}`;
+  const savedImageUrl = movie.image;
 
   const moveToTrailer = () => {
     window.open(movie.trailerLink, '_blank');
   }
 
+  const imageSrc = isSavedMoviesRoute ? savedImageUrl : imageUrl;
+
   return (
     <figure className='movie'>
-      <button className='movie__trailer-button' onClick={moveToTrailer}><img className='movie__image' src={imageUrl} alt={"Кадр из фильма " + movie.nameRU} width={movie.image.width} height={movie.image.height} /></button>
+      <button className='movie__trailer-button' onClick={moveToTrailer}><img className='movie__image' src={imageSrc} alt={"Кадр из фильма " + movie.nameRU} width={movie.image.width} height={movie.image.height} /></button>
       <figcaption className='movie__caption'>
         <h2 className='movie__title'>{movie.nameRU}</h2>
         {movieButton}

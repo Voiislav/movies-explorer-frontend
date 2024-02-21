@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './MoviesCard.css';
 import heartIcon from '../../images/heart-icon.svg';
 import deleteIcon from '../../images/delete-icon.svg';
@@ -13,21 +13,33 @@ function MoviesCard({ movie }) {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
+  useEffect(() => {
+    if (isSavedMoviesRoute) {
+      setIsLiked(true); // Если мы на странице сохраненных фильмов, то считаем фильм уже лайкнутым
+      setIsSaved(true);
+    } else {
+      setIsLiked(false);
+      setIsSaved(false);
+    }
+  }, [isSavedMoviesRoute]);
+
   const toggleLike = () => {
     setIsLiked(!isLiked);
   }
 
   const handleSave = () => {
-    console.log(movie);
-    mainApi.saveMovie(movie)
-    .then((savedMovie) => {
-      console.log(savedMovie);
-      toggleLike();
-      setIsSaved(true);
-    })
-    .catch((error) => {
-      console.error(error);
-    })
+    if (!isSaved) {
+      mainApi.saveMovie(movie)
+      .then((savedMovie) => {
+        console.log(savedMovie);
+        toggleLike();
+        setIsLiked(true);
+        setIsSaved(true);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+    }
   }
 
   const handleDelete = () => {
@@ -47,7 +59,7 @@ function MoviesCard({ movie }) {
       <img className='movie__delete-icon' src={deleteIcon} alt='иконка крестика' />
     </button>
   ) : (
-    <button className='movie__button' type='button' aria-label='Сохранить' onClick={isSaved ? () => handleDelete(movie.movieId) : handleSave}>
+    <button className='movie__button' type='button' aria-label='Сохранить' onClick={handleSave}>
       {isLiked ? (
         <img src={heartIconClicked} alt='иконка сердечка' />
       ) : (
@@ -77,3 +89,4 @@ function MoviesCard({ movie }) {
 };
 
 export default MoviesCard;
+

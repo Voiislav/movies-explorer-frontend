@@ -34,26 +34,19 @@ function Profile({ setIsAuth, isAuth }) {
     }
   }, [userData]);
 
-  useEffect((token) => {
-    checkToken(token)
-      .then(() => {
-        mainApi.getUserData()
-          .then((data) => {
-            setUserData(data);
-            setName(data.name);
-            setEmail(data.email);
-            setIsLoading(false);
-            setOriginalName(data.name);
-            setOriginalEmail(data.email);
-            setIsAuth(true);
-          })
-          .catch((error) => {
-            console.error('Ошибка при получении данных пользователя:', error);
-            setIsLoading(false);
-          });
+  useEffect(() => {
+    checkToken()
+      .then((data) => {
+        setUserData(data);
+        setName(data.name);
+        setEmail(data.email);
+        setIsLoading(false);
+        setOriginalName(data.name);
+        setOriginalEmail(data.email);
+        setIsAuth(true);
       })
       .catch((error) => {
-        console.error('Ошибка при проверке токена:', error);
+        console.error('Ошибка при получении данных пользователя:', error);
         setIsLoading(false);
       });
   }, []);

@@ -12,7 +12,7 @@ export class MainApi {
   }
 
   getSavedMovies() {
-    return fetch(`${this._baseUrl}/movies`, {
+    return fetch(`${this._baseUrl}/movies/movies`, {
       headers: this._headers,
     })
     .then(this._checkResponse)

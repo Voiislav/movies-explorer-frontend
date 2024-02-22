@@ -19,10 +19,18 @@ function SavedMovies({ isAuth }) {
   const [initialSavedMovies, setInitialSavedMovies] = useState([]);
 
   useEffect(() => {
-    mainApi.getSavedMovies()
+    mainApi.getUserData()
+      .then((userData) => {
+        setUserData(userData);
+        return mainApi.getSavedMovies();
+      })
       .then((moviesData) => {
-        setSavedMovies(moviesData);
-        setInitialSavedMovies(moviesData);
+        console.log(userData.id)
+        if (userData.id) {
+          const userMovies = moviesData.filter(movie => movie.owner === userData.id);
+          setSavedMovies(userMovies);
+          setInitialSavedMovies(userMovies);
+        }
         setIsLoading(false);
       })
       .catch((error) => {
@@ -30,17 +38,7 @@ function SavedMovies({ isAuth }) {
         setErrorMessage('Сохраненные фильмы не найдены.');
         console.error(error);
       });
-  }, []);
-
-  useEffect(() => {
-    mainApi.getUserData()
-      .then((userData) => {
-        setUserData(userData);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  }, [userData.id]);
 
   const handleSearch = (query, isShortFilmChecked) => {
     setIsLoading(false);

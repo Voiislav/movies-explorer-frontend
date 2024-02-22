@@ -12,6 +12,7 @@ function SavedMovies({ isAuth }) {
   const [movies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     mainApi.getSavedMovies()
@@ -27,6 +28,19 @@ function SavedMovies({ isAuth }) {
       });
   }, []);
 
+  useEffect(() => {
+    mainApi.getUserData()
+      .then((userData) => {
+        setUserData(userData);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  // Фильтрация фильмов по владельцу
+  const filteredMovies = movies.filter(movie => movie.owner === userData.id);
+
   return (
     <>
       <Header authorized={isAuth} />
@@ -38,7 +52,7 @@ function SavedMovies({ isAuth }) {
         ) : errorMessage ? (
           <p className='saved-main__error'>{errorMessage}</p>
         ) : (
-          <MoviesCardList movies={movies} />
+          <MoviesCardList movies={filteredMovies} />
         )}
       </main>
       <Footer />
@@ -47,3 +61,4 @@ function SavedMovies({ isAuth }) {
 };
 
 export default SavedMovies;
+

@@ -113,6 +113,9 @@ function Profile({ setIsAuth, isAuth }) {
 
   const handleSignOut = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('searchQuery');
+    localStorage.removeItem('isShortFilmChecked');
+    localStorage.removeItem('movies');
     setIsAuth(false);
     navigate('/', { replace: true });
   }

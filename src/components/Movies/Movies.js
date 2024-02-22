@@ -14,12 +14,13 @@ function Movies({ isAuth }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [notFoundMessage, setNotFoundMessage] = useState('');
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(localStorage.getItem('searchQuery') !== null ? localStorage.getItem('searchQuery') : '');
+  const [searchQuery, setSearchQuery] = useState(localStorage.getItem('searchQuery') || '');
 
   useEffect(() => {
     const storedSearchQuery = localStorage.getItem('searchQuery');
     const storedIsShortFilmChecked = localStorage.getItem('isShortFilmChecked');
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
+    console.log(storedSearchQuery);
 
     if (storedMovies && storedMovies.length > 0) {
       setMovies(storedMovies);
@@ -30,7 +31,7 @@ function Movies({ isAuth }) {
         setIsShortFilmChecked(true);
       }
     } else {
-      handleSearch(storedSearchQuery, false);
+      setNotFoundMessage('');
     }
   }, []);
 
@@ -92,7 +93,7 @@ function Movies({ isAuth }) {
     <>
       <Header authorized={isAuth} />
       <main className='movies-main'>
-        <SearchForm onSearch={handleSearchFormSubmit} />
+        <SearchForm onSearch={handleSearchFormSubmit} searchQuery={searchQuery} />
         <FilterCheckbox onCheckboxChange={handleCheckboxChange} />
         {isLoading ?
           <Preloader /> :

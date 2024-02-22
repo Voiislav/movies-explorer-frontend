@@ -1,16 +1,16 @@
 import './SearchForm.css';
 import { useState } from 'react';
 
-function SearchForm({ onSearch }) {
-  const [searchQuery, setSearchQuery] = useState('');
+function SearchForm({ onSearch, searchQuery }) {
+  const [searchValue, setSearchValue] = useState(searchQuery || '');
 
   const handleChange = (event) => {
-    setSearchQuery(event.target.value);
+    setSearchValue(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSearch(searchQuery);
+    onSearch(searchValue);
   };
 
   return (
@@ -20,10 +20,10 @@ function SearchForm({ onSearch }) {
         minLength={1}
         className='search__input'
         placeholder='Фильм'
-        value={searchQuery}
+        value={searchValue}
         onChange={handleChange}
-        required>
-      </input>
+        required
+      />
       <button type="submit" aria-label="Искать фильм" className='search__submit'>Найти</button>
     </form>
   );

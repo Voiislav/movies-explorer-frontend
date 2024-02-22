@@ -24,41 +24,37 @@ function MoviesCard({ movie, onDeleteMovie }) {
   }, [isSavedMoviesRoute]);
 
   const toggleLike = () => {
-    setIsLiked(!isLiked);
+    setIsSaved(!isSaved);
   }
 
+
   const handleSave = () => {
-    if (!isSaved) {
-      mainApi.saveMovie(movie)
-      .then((savedMovie) => {
-        console.log(savedMovie);
-        toggleLike();
-        setIsLiked(true);
-        setIsSaved(true);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-    } else {
-      mainApi.getSavedMovies()
-      .then((moviesData) => {
-        const savedMovie = moviesData.find(saved => saved.nameRU === movie.nameRU);
-        if (savedMovie) {
-          mainApi.deleteMovie(savedMovie._id)
-          .then((deletedMovie) => {
-            console.log(deletedMovie);
-            toggleLike();
-            setIsSaved(false);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    }
+    mainApi.getSavedMovies()
+    .then((moviesData) => {
+      const savedMovie = moviesData.find(saved => saved.nameRU === movie.nameRU);
+      if(savedMovie) {
+        mainApi.deleteMovie(savedMovie._id)
+        .then((deletedMovie) => {
+          console.log(deletedMovie);
+          toggleLike();
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+      } else {
+        mainApi.saveMovie(movie)
+        .then((savedMovie) => {
+          console.log(savedMovie);
+          toggleLike();
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error)
+    })
   }
   
 

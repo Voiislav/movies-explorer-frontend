@@ -29,7 +29,7 @@ function SavedMovies({ isAuth }) {
 
   return (
     <>
-      <Header authorized={isAuth} />
+      <Header authorized={true} />
       <main className='saved-main'>
         <SearchForm />
         <FilterCheckbox />

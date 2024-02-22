@@ -119,7 +119,7 @@ function Profile({ setIsAuth, isAuth }) {
 
   return (
     <>
-      <Header authorized={isAuth} />
+      <Header authorized={true} />
       <section className='profile'>
         {isLoading ? (
           <Preloader />

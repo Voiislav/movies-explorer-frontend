@@ -90,7 +90,7 @@ function Movies({ isAuth }) {
 
   return (
     <>
-      <Header authorized={isAuth} />
+      <Header authorized={true} />
       <main className='movies-main'>
         <SearchForm onSearch={handleSearchFormSubmit} />
         <FilterCheckbox onCheckboxChange={handleCheckboxChange} />

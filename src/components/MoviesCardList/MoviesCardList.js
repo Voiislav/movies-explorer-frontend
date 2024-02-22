@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ movies }) {
+function MoviesCardList({ movies, onDeleteMovie }) {
   const location = useLocation();
   const isMoviesRoute = location.pathname === '/movies';
 
@@ -44,6 +44,7 @@ function MoviesCardList({ movies }) {
             key={isMoviesRoute ? movie.id : movie._id}
             movie={movie}
             image={movie.image}
+            onDeleteMovie={onDeleteMovie}
           />
         ))}
       </ul>

@@ -6,7 +6,7 @@ import heartIconClicked from '../../images/heart-icon-clicked.svg';
 import { useLocation } from 'react-router-dom';
 import mainApi from '../../utils/MainApi';
 
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, onDeleteMovie }) {
   const location = useLocation();
   const isSavedMoviesRoute = location.pathname === '/saved-movies';
 
@@ -48,6 +48,7 @@ function MoviesCard({ movie }) {
       console.log(deletedMovie);
       toggleLike();
       setIsSaved(false);
+      onDeleteMovie(movie._id);
     })
     .catch((error) => {
       console.error(error);

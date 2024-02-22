@@ -74,6 +74,11 @@ function SavedMovies({ isAuth }) {
     handleSearch(query, isShortFilmChecked);
   };
 
+  const handleDeleteMovie = (movieId) => {
+    setSavedMovies(savedMovies.filter(movie => movie._id !== movieId));
+    setInitialSavedMovies(initialSavedMovies.filter(movie => movie._id !== movieId));
+  };
+
   return (
     <>
       <Header authorized={isAuth} />
@@ -87,7 +92,7 @@ function SavedMovies({ isAuth }) {
         ) : savedMovies.length === 0 ? (
           <p className='saved-main__error'>{notFoundMessage}</p>
         ) : (
-          <MoviesCardList movies={savedMovies} />
+          <MoviesCardList movies={savedMovies} onDeleteMovie={handleDeleteMovie} />
         )}
       </main>
       <Footer />

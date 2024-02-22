@@ -41,7 +41,7 @@ function MoviesCardList({ movies }) {
       <ul className='movies__list'>
         {movies.slice(0, visibleCards).map((movie) => (
           <MoviesCard
-            key={movie.id}
+            key={isMoviesRoute ? movie.id : movie._id}
             movie={movie}
             image={movie.image}
           />

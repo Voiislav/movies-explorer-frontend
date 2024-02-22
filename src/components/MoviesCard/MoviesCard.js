@@ -10,22 +10,31 @@ function MoviesCard({ movie, onDeleteMovie }) {
   const location = useLocation();
   const isSavedMoviesRoute = location.pathname === '/saved-movies';
 
-  const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     if (isSavedMoviesRoute) {
-      setIsLiked(true);
       setIsSaved(true);
     } else {
-      setIsLiked(false);
       setIsSaved(false);
     }
   }, [isSavedMoviesRoute]);
 
   const toggleLike = () => {
     setIsSaved(!isSaved);
-  }
+  };
+
+
+  useEffect(() => {
+      mainApi.getSavedMovies()
+        .then((savedMovies) => {
+          const isMovieSaved = savedMovies.some(savedMovie => savedMovie.nameRU === movie.nameRU);
+          setIsSaved(isMovieSaved);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+  }, [movie.nameRU]);
 
 
   const handleSave = () => {

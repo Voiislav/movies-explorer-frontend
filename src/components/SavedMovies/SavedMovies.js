@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
@@ -6,19 +7,22 @@ import SearchForm from '../SearchForm/SearchForm';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import mainApi from '../../utils/MainApi';
-import { useEffect, useState } from 'react';
 
 function SavedMovies({ isAuth }) {
-  const [movies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const [notFoundMessage, setNotFoundMessage] = useState('');
   const [userData, setUserData] = useState({});
+  const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [initialSavedMovies, setInitialSavedMovies] = useState([]);
 
   useEffect(() => {
     mainApi.getSavedMovies()
       .then((moviesData) => {
         setSavedMovies(moviesData);
-        console.log(moviesData)
+        setInitialSavedMovies(moviesData);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -38,21 +42,52 @@ function SavedMovies({ isAuth }) {
       });
   }, []);
 
-  // Фильтрация фильмов по владельцу
-  const filteredMovies = movies.filter(movie => movie.owner === userData.id);
+  const handleSearch = (query, isShortFilmChecked) => {
+    setIsLoading(false);
+    let filteredMovies = initialSavedMovies.filter((movie) => {
+      const nameRU = movie.nameRU.toLowerCase();
+      const nameEN = movie.nameEN.toLowerCase();
+      const search = query.toLowerCase();
+      return nameRU.includes(search) || nameEN.includes(search);
+    });
+
+    if (isShortFilmChecked) {
+      filteredMovies = filteredMovies.filter(movie => movie.duration <= 40);
+    }
+
+    setSavedMovies(filteredMovies);
+
+    if (filteredMovies.length === 0) {
+      setNotFoundMessage('Ничего не найдено');
+    } else {
+      setNotFoundMessage('');
+    }
+  };
+
+  const handleCheckboxChange = (isChecked) => {
+    setIsShortFilmChecked(isChecked);
+    handleSearch(searchQuery, isChecked);
+  };
+
+  const handleSearchFormSubmit = (query) => {
+    setSearchQuery(query);
+    handleSearch(query, isShortFilmChecked);
+  };
 
   return (
     <>
       <Header authorized={isAuth} />
       <main className='saved-main'>
-        <SearchForm />
-        <FilterCheckbox />
+        <SearchForm onSearch={handleSearchFormSubmit} />
+        <FilterCheckbox onCheckboxChange={handleCheckboxChange} />
         {isLoading ? (
           <Preloader />
         ) : errorMessage ? (
           <p className='saved-main__error'>{errorMessage}</p>
+        ) : savedMovies.length === 0 ? (
+          <p className='saved-main__error'>{notFoundMessage}</p>
         ) : (
-          <MoviesCardList movies={filteredMovies} />
+          <MoviesCardList movies={savedMovies} />
         )}
       </main>
       <Footer />
@@ -61,4 +96,6 @@ function SavedMovies({ isAuth }) {
 };
 
 export default SavedMovies;
+
+
 

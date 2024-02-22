@@ -47,7 +47,7 @@ function MoviesCardList({ movies }) {
           />
         ))}
       </ul>
-      {isMoviesRoute && visibleCards < movies.length && (
+      {visibleCards < movies.length && (
         <button className='movies__more' type='button' aria-label='Загрузить еще' onClick={handleLoadMore}>Ещё</button>
       )}
     </section>

@@ -39,8 +39,28 @@ function MoviesCard({ movie, onDeleteMovie }) {
       .catch((error) => {
         console.error(error);
       })
+    } else {
+      mainApi.getSavedMovies()
+      .then((moviesData) => {
+        const savedMovie = moviesData.find(saved => saved.nameRU === movie.nameRU);
+        if (savedMovie) {
+          mainApi.deleteMovie(savedMovie._id)
+          .then((deletedMovie) => {
+            console.log(deletedMovie);
+            toggleLike();
+            setIsSaved(false);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     }
   }
+  
 
   const handleDelete = () => {
     mainApi.deleteMovie(movie._id)

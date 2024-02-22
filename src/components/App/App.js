@@ -21,13 +21,14 @@ function App() {
     checkToken()
       .then((userData) => {
         setCurrentUser(userData);
-        setIsAuth(true);
         console.log(userData);
+        setIsAuth(true);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+  
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -57,7 +58,6 @@ function App() {
                 <ProtectedRoute
                   element={
                     <Movies
-                      setIsAuth={setIsAuth}
                       isAuth={isAuth}
                     />
                   }
@@ -71,7 +71,6 @@ function App() {
                 <ProtectedRoute
                   element={
                     <SavedMovies
-                      setIsAuth={setIsAuth}
                       isAuth={isAuth}
                     />
                   }

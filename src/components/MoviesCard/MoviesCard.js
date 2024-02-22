@@ -15,7 +15,7 @@ function MoviesCard({ movie }) {
 
   useEffect(() => {
     if (isSavedMoviesRoute) {
-      setIsLiked(true); // Если мы на странице сохраненных фильмов, то считаем фильм уже лайкнутым
+      setIsLiked(true);
       setIsSaved(true);
     } else {
       setIsLiked(false);
@@ -60,7 +60,7 @@ function MoviesCard({ movie }) {
     </button>
   ) : (
     <button className='movie__button' type='button' aria-label='Сохранить' onClick={handleSave}>
-      {isLiked ? (
+      {isSaved ? (
         <img src={heartIconClicked} alt='иконка сердечка' />
       ) : (
         <img src={heartIcon} alt='иконка сердечка' />

@@ -92,7 +92,7 @@ function SavedMovies({ isAuth }) {
         ) : savedMovies.length === 0 ? (
           <p className='saved-main__error'>{notFoundMessage}</p>
         ) : (
-          <MoviesCardList movies={savedMovies} onDeleteMovie={handleDeleteMovie} />
+          <MoviesCardList movies={[...savedMovies].reverse()} onDeleteMovie={handleDeleteMovie} />
         )}
       </main>
       <Footer />

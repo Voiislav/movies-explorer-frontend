@@ -20,7 +20,6 @@ function Movies({ isAuth }) {
     const storedSearchQuery = localStorage.getItem('searchQuery');
     const storedIsShortFilmChecked = localStorage.getItem('isShortFilmChecked');
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
-    console.log(storedSearchQuery);
 
     if (storedMovies && storedMovies.length > 0) {
       setMovies(storedMovies);

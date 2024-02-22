@@ -57,6 +57,10 @@
   margin: 0;
 }
 
+.profile__message {
+  color: #2BE080;
+}
+
 .profile__error_bottom {
   position: absolute;
   right: 0;

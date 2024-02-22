@@ -16,6 +16,7 @@ function Profile({ setIsAuth, isAuth }) {
   const [emailError, setEmailError] = useState('');
   const [originalName, setOriginalName] = useState('');
   const [originalEmail, setOriginalEmail] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,6 +64,7 @@ function Profile({ setIsAuth, isAuth }) {
     })
       .then((data) => {
         console.log('Данные профиля успешно обновлены:', data);
+        setSuccessMessage('Данные профиля успешно обновлены.')
         setOriginalName(name);
         setOriginalEmail(email);
       })
@@ -129,6 +131,7 @@ function Profile({ setIsAuth, isAuth }) {
         ) : (
           <>
             <h1 className='profile__greeting'>Привет, {name}!</h1>
+            <p className='profile__message'>{successMessage}</p>
             <form className='profile__edit' onSubmit={handleEditProfile}>
               <div className='profile__inputs-area profile__inputs-area_top'>
                 <label className='profile__label' htmlFor='name'>Имя</label>

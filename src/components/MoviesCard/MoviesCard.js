@@ -43,7 +43,7 @@ function MoviesCard({ movie }) {
   }
 
   const handleDelete = () => {
-    mainApi.deleteMovie(movie.movieId)
+    mainApi.deleteMovie(movie._id)
     .then((deletedMovie) => {
       console.log(deletedMovie);
       toggleLike();

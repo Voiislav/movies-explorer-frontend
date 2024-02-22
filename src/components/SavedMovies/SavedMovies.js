@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 import mainApi from '../../utils/MainApi';
 import { useEffect, useState } from 'react';
 
-function SavedMovies({ isAuth }) {
+function SavedMovies() {
   const [movies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');

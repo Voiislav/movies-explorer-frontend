@@ -6,7 +6,7 @@ import { checkToken } from '../../auth';
 import mainApi from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
 
-function Profile({ setIsAuth, isAuth }) {
+function Profile({ setIsAuth }) {
   const [userData, setUserData] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

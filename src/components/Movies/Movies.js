@@ -8,7 +8,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import moviesApi from '../../utils/MoviesApi';
 
-function Movies({ isAuth }) {
+function Movies() {
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');

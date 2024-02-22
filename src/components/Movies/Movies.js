@@ -8,7 +8,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import moviesApi from '../../utils/MoviesApi';
 
-function Movies() {
+function Movies({ isAuth }) {
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
@@ -90,7 +90,7 @@ function Movies() {
 
   return (
     <>
-      <Header authorized={true} />
+      <Header authorized={isAuth} />
       <main className='movies-main'>
         <SearchForm onSearch={handleSearchFormSubmit} />
         <FilterCheckbox onCheckboxChange={handleCheckboxChange} />

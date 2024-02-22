@@ -44,6 +44,7 @@ function App() {
                   element={
                     <Profile
                       setIsAuth={setIsAuth}
+                      isAuth={isAuth}
                     />
                   }
                   isAuth={isAuth}
@@ -57,6 +58,7 @@ function App() {
                   element={
                     <Movies
                       setIsAuth={setIsAuth}
+                      isAuth={isAuth}
                     />
                   }
                   isAuth={isAuth}
@@ -70,6 +72,7 @@ function App() {
                   element={
                     <SavedMovies
                       setIsAuth={setIsAuth}
+                      isAuth={isAuth}
                     />
                   }
                   isAuth={isAuth}

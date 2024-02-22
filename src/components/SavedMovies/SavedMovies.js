@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 import mainApi from '../../utils/MainApi';
 import { useEffect, useState } from 'react';
 
-function SavedMovies() {
+function SavedMovies({ isAuth }) {
   const [movies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,7 +29,7 @@ function SavedMovies() {
 
   return (
     <>
-      <Header authorized={true} />
+      <Header authorized={isAuth} />
       <main className='saved-main'>
         <SearchForm />
         <FilterCheckbox />

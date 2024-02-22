@@ -28,8 +28,16 @@ function Register({ setIsAuth }) {
       .register(formValue.email, formValue.password, formValue.name)
       .then((res) => {
         if (res && !res.error) {
-          setIsAuth(true);
-          navigate('/movies');
+          auth.authorize(formValue.email, formValue.password)
+            .then((data) => {
+              if (data.token) {
+                setIsAuth(true);
+                navigate('/movies', { replace: true });
+              }
+            })
+            .catch((err) => {
+              setSubmitError("Произошла ошибка при регистрации: пользователь не авторизован");
+            });
         }
       })
       .catch((err) => {

@@ -14,7 +14,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { checkToken } from '../../auth';
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('token'));
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
@@ -22,7 +22,6 @@ function App() {
       .then((userData) => {
         setCurrentUser(userData);
         console.log(userData);
-        setIsAuth(true);
       })
       .catch((error) => {
         console.error(error);

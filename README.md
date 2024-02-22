@@ -1,4 +1,5 @@
 [Ccылка на проект](https://moomovies.nomoredomainswork.ru)
+[Ссылка на PR](https://github.com/Voiislav/movies-explorer-frontend/pull/2)
 
 # Getting Started with Create React App
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
@@ -7,38 +7,40 @@ import SearchForm from '../SearchForm/SearchForm';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import mainApi from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function SavedMovies({ isAuth }) {
+  const currentUser = useContext(CurrentUserContext);
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [notFoundMessage, setNotFoundMessage] = useState('');
-  const [userData, setUserData] = useState({});
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [initialSavedMovies, setInitialSavedMovies] = useState([]);
 
+
   useEffect(() => {
-    mainApi.getUserData()
-      .then((userData) => {
-        setUserData(userData);
-        return mainApi.getSavedMovies();
-      })
-      .then((moviesData) => {
-        console.log(userData.id)
-        if (userData.id) {
-          const userMovies = moviesData.filter(movie => movie.owner === userData.id);
+    const fetchData = async () => {
+      try {
+        if (currentUser.id) { 
+          console.log(currentUser.id)
+          const moviesData = await mainApi.getSavedMovies();
+          const userMovies = moviesData.filter(movie => movie.owner === currentUser.id);
           setSavedMovies(userMovies);
           setInitialSavedMovies(userMovies);
         }
         setIsLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         setIsLoading(false);
         setErrorMessage('Сохраненные фильмы не найдены.');
         console.error(error);
-      });
-  }, [userData.id]);
+      }
+    };
+    
+    fetchData();
+  }, [currentUser]);
+
 
   const handleSearch = (query, isShortFilmChecked) => {
     setIsLoading(false);

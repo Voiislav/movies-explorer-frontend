@@ -23,7 +23,7 @@ function MoviesCard({ movie, onDeleteMovie }) {
   const toggleLike = () => {
     setIsSaved(!isSaved);
   };
-
+  
 
   useEffect(() => {
       mainApi.getSavedMovies()

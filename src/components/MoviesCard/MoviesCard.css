@@ -72,6 +72,10 @@
   .movie__image {
     height: 190px;
   }
+
+  .movie__button_delete {
+    opacity: 1;
+  }
 }
 
 @media screen and (max-width: 320px) {
@@ -89,10 +93,6 @@
 
   .movie__time {
     font-size: 10px;
-  }
-
-  .movie__button_delete {
-    opacity: 1;
   }
 
   .movie__image {

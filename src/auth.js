@@ -35,6 +35,7 @@ export const authorize = (email, password) => {
       if (data.token) {
         const token = data.token;
         localStorage.setItem("token", token);
+        console.log(localStorage.getItem('token'))
       }
       return data;
     });
@@ -42,6 +43,7 @@ export const authorize = (email, password) => {
 
 export const checkToken = () => {
   const token = localStorage.getItem("token");
+  console.log(token);
   return request(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {

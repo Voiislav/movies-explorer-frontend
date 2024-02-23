@@ -6,35 +6,19 @@ import heartIconClicked from '../../images/heart-icon-clicked.svg';
 import { useLocation } from 'react-router-dom';
 import mainApi from '../../utils/MainApi';
 
-function MoviesCard({ movie, onDeleteMovie }) {
+function MoviesCard({ movie, onDeleteMovie, isSaved }) {
   const location = useLocation();
   const isSavedMoviesRoute = location.pathname === '/saved-movies';
 
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSavedLocal, setIsSavedLocal] = useState(isSaved);
 
   useEffect(() => {
-    if (isSavedMoviesRoute) {
-      setIsSaved(true);
-    } else {
-      setIsSaved(false);
-    }
-  }, [isSavedMoviesRoute]);
+    setIsSavedLocal(isSaved);
+  }, [isSaved]);
 
   const toggleLike = () => {
-    setIsSaved(!isSaved);
+    setIsSavedLocal(!isSavedLocal);
   };
-  
-
-  useEffect(() => {
-      mainApi.getSavedMovies()
-        .then((savedMovies) => {
-          const isMovieSaved = savedMovies.some(savedMovie => savedMovie.nameRU === movie.nameRU);
-          setIsSaved(isMovieSaved);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-  }, [movie.nameRU]);
 
 
   const handleSave = () => {
@@ -46,6 +30,7 @@ function MoviesCard({ movie, onDeleteMovie }) {
         .then((deletedMovie) => {
           console.log(deletedMovie);
           toggleLike();
+          setIsSavedLocal(false);
         })
         .catch((error) => {
           console.error(error);
@@ -55,6 +40,7 @@ function MoviesCard({ movie, onDeleteMovie }) {
         .then((savedMovie) => {
           console.log(savedMovie);
           toggleLike();
+          setIsSavedLocal(true);
         })
         .catch((error) => {
           console.error(error)
@@ -72,7 +58,7 @@ function MoviesCard({ movie, onDeleteMovie }) {
     .then((deletedMovie) => {
       console.log(deletedMovie);
       toggleLike();
-      setIsSaved(false);
+      setIsSavedLocal(false);
       onDeleteMovie(movie._id);
     })
     .catch((error) => {
@@ -86,7 +72,7 @@ function MoviesCard({ movie, onDeleteMovie }) {
     </button>
   ) : (
     <button className='movie__button' type='button' aria-label='Сохранить' onClick={handleSave}>
-      {isSaved ? (
+      {isSavedLocal ? (
         <img src={heartIconClicked} alt='иконка сердечка' />
       ) : (
         <img src={heartIcon} alt='иконка сердечка' />

@@ -2,10 +2,13 @@ import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import mainApi from '../../utils/MainApi';
 
 function MoviesCardList({ movies, onDeleteMovie }) {
   const location = useLocation();
   const isMoviesRoute = location.pathname === '/movies';
+  const isSavedMoviesRoute = location.pathname === '/saved-movies';
+
 
   const calculateVisibleCards = () => {
     const screenWidth = window.innerWidth;
@@ -18,7 +21,23 @@ function MoviesCardList({ movies, onDeleteMovie }) {
     }
   };
 
+
   const [visibleCards, setVisibleCards] = useState(calculateVisibleCards());
+  const [savedMovies, setSavedMovies] = useState([]);
+
+
+  useEffect(() => {
+    if (isSavedMoviesRoute) {
+      mainApi.getSavedMovies()
+        .then((savedMovies) => {
+          setSavedMovies(savedMovies);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [isSavedMoviesRoute]);
+
 
   const handleLoadMore = () => {
     setVisibleCards(prevVisibleCards => prevVisibleCards + (window.innerWidth <= 768 ? 2 : 4));
@@ -45,6 +64,7 @@ function MoviesCardList({ movies, onDeleteMovie }) {
             movie={movie}
             image={movie.image}
             onDeleteMovie={onDeleteMovie}
+            isSaved={isSavedMoviesRoute ? savedMovies.some(savedMovie => savedMovie.nameRU === movie.nameRU) : false}
           />
         ))}
       </ul>

@@ -27,7 +27,6 @@ function MoviesCardList({ movies, onDeleteMovie }) {
 
 
   useEffect(() => {
-    if (isSavedMoviesRoute) {
       mainApi.getSavedMovies(localStorage.getItem('token'))
         .then((savedMovies) => {
           setSavedMovies(savedMovies);
@@ -35,8 +34,7 @@ function MoviesCardList({ movies, onDeleteMovie }) {
         .catch((error) => {
           console.error(error);
         });
-    }
-  }, [isSavedMoviesRoute]);
+  }, []);
 
 
   const handleLoadMore = () => {
@@ -64,7 +62,7 @@ function MoviesCardList({ movies, onDeleteMovie }) {
             movie={movie}
             image={movie.image}
             onDeleteMovie={onDeleteMovie}
-            isSaved={isSavedMoviesRoute ? savedMovies.some(savedMovie => savedMovie.nameRU === movie.nameRU) : false}
+            isSaved={savedMovies.some(savedMovie => savedMovie.nameRU === movie.nameRU)}
           />
         ))}
       </ul>

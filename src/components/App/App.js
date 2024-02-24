@@ -71,6 +71,7 @@ function App() {
                   element={
                     <SavedMovies
                       isAuth={isAuth}
+                      currentUser={currentUser}
                     />
                   }
                   isAuth={isAuth}

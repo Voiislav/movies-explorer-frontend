@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
@@ -7,10 +7,8 @@ import SearchForm from '../SearchForm/SearchForm';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import mainApi from '../../utils/MainApi';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function SavedMovies({ isAuth }) {
-  const currentUser = useContext(CurrentUserContext);
+function SavedMovies({ isAuth, currentUser }) {
   const [savedMovies, setSavedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');

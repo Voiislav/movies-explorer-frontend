@@ -28,7 +28,7 @@ function MoviesCardList({ movies, onDeleteMovie }) {
 
   useEffect(() => {
     if (isSavedMoviesRoute) {
-      mainApi.getSavedMovies()
+      mainApi.getSavedMovies(localStorage.getItem('token'))
         .then((savedMovies) => {
           setSavedMovies(savedMovies);
         })

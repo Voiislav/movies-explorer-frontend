@@ -61,7 +61,7 @@ function Profile({ setIsAuth, isAuth }) {
     mainApi.setNewUserData({
       name: name,
       email: email,
-    })
+    }, localStorage.getItem('token'))
       .then((data) => {
         console.log('Данные профиля успешно обновлены:', data);
         setSuccessMessage('Данные профиля успешно обновлены.')

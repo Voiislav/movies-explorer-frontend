@@ -11,33 +11,39 @@ export class MainApi {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  getSavedMovies() {
+  getSavedMovies(token) {
     return fetch(`${this._baseUrl}/movies/movies`, {
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
     })
-    .then(this._checkResponse)
+      .then(this._checkResponse)
   }
 
   getUserData() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     })
-    .then(this._checkResponse)
+      .then(this._checkResponse)
   }
 
   setNewUserData({
     name,
     email
-  }) {
+  }, token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         name: name,
         email: email,
       })
     })
-    .then(this._checkResponse)
+      .then(this._checkResponse)
   }
 
   saveMovie({
@@ -52,10 +58,13 @@ export class MainApi {
     id,
     nameRU,
     nameEN
-  }) {
+  }, token) {
     return fetch(`${this._baseUrl}/movies/movies`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         country: country,
         director: director,
@@ -71,14 +80,17 @@ export class MainApi {
         nameEN: nameEN
       })
     })
-    .then(this._checkResponse)
+      .then(this._checkResponse)
   }
 
-  deleteMovie(movieId) {
+  deleteMovie(movieId, token) {
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
-        method: 'DELETE',
-        headers: this._headers,
-      })
+      method: 'DELETE',
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(this._checkResponse)
   }
 }

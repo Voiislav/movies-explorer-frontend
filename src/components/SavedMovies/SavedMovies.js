@@ -23,7 +23,8 @@ function SavedMovies({ isAuth, currentUser }) {
       try {
         if (currentUser.id) { 
           console.log(currentUser.id)
-          const moviesData = await mainApi.getSavedMovies();
+          const moviesData = await mainApi.getSavedMovies(localStorage.getItem('token'));
+          console.log(moviesData);
           const userMovies = moviesData.filter(movie => movie.owner === currentUser.id);
           setSavedMovies(userMovies);
           setInitialSavedMovies(userMovies);

@@ -20,13 +20,13 @@ function MoviesCard({ movie, onDeleteMovie, isSaved }) {
     setIsSavedLocal(!isSavedLocal);
   };
 
-
+  const token = localStorage.getItem('token');
   const handleSave = () => {
-    mainApi.getSavedMovies()
+    mainApi.getSavedMovies(token)
     .then((moviesData) => {
       const savedMovie = moviesData.find(saved => saved.nameRU === movie.nameRU);
       if(savedMovie) {
-        mainApi.deleteMovie(savedMovie._id)
+        mainApi.deleteMovie(savedMovie._id, token)
         .then((deletedMovie) => {
           console.log(deletedMovie);
           toggleLike();
@@ -36,7 +36,7 @@ function MoviesCard({ movie, onDeleteMovie, isSaved }) {
           console.error(error);
         })
       } else {
-        mainApi.saveMovie(movie)
+        mainApi.saveMovie(movie, token)
         .then((savedMovie) => {
           console.log(savedMovie);
           toggleLike();
@@ -54,7 +54,7 @@ function MoviesCard({ movie, onDeleteMovie, isSaved }) {
   
 
   const handleDelete = () => {
-    mainApi.deleteMovie(movie._id)
+    mainApi.deleteMovie(movie._id, token)
     .then((deletedMovie) => {
       console.log(deletedMovie);
       toggleLike();

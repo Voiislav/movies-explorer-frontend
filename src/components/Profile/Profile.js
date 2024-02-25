@@ -17,6 +17,7 @@ function Profile({ setIsAuth, isAuth }) {
   const [originalName, setOriginalName] = useState('');
   const [originalEmail, setOriginalEmail] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [submitError, setSubmitError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,6 +73,11 @@ function Profile({ setIsAuth, isAuth }) {
       })
       .catch((error) => {
         console.error('Ошибка при обновлении данных профиля:', error);
+        if (error.response && error.response.status === 500) {
+          setSubmitError('Произошла ошибка сервера при обновлении данных профиля.');
+        } else {
+          setSubmitError('Произошла ошибка при обновлении данных профиля.');
+        }
         setIsLoading(false);
       });
   };
@@ -135,6 +141,7 @@ function Profile({ setIsAuth, isAuth }) {
           <>
             <h1 className='profile__greeting'>Привет, {name}!</h1>
             <p className='profile__message'>{successMessage}</p>
+            {submitError && <p className='profile__message profile__message_error'>{submitError}</p>}
             <form className='profile__edit' onSubmit={handleEditProfile}>
               <div className='profile__inputs-area profile__inputs-area_top'>
                 <label className='profile__label' htmlFor='name'>Имя</label>

@@ -61,6 +61,10 @@
   color: #2BE080;
 }
 
+.profile__message_error {
+  color: #FF3055;
+}
+
 .profile__error_bottom {
   position: absolute;
   right: 0;

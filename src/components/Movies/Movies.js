@@ -22,14 +22,15 @@ function Movies({ isAuth }) {
     const storedIsShortFilmChecked = localStorage.getItem('isShortFilmChecked');
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
 
+    if (storedSearchQuery) {
+      setSearchQuery(storedSearchQuery);
+    }
+    if (storedIsShortFilmChecked !== null && storedIsShortFilmChecked === 'true') {
+      setIsShortFilmChecked(true);
+    }
+
     if (storedMovies && storedMovies.length > 0) {
       setMovies(storedMovies);
-      if (storedSearchQuery) {
-        setSearchQuery(storedSearchQuery);
-      }
-      if (storedIsShortFilmChecked !== null && storedIsShortFilmChecked === 'true') {
-        setIsShortFilmChecked(true);
-      }
     } else {
       setNotFoundMessage('');
     }

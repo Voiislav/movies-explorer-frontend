@@ -1,16 +1,9 @@
 import './FilterCheckbox.css';
-import { useState, useEffect } from 'react';
 
-function FilterCheckbox({ onCheckboxChange, isSearching }) {
-  const [isChecked, setIsChecked] = useState(localStorage.getItem('isShortFilmChecked') === 'true' ? true : false);
-
-  useEffect(() => {
-    localStorage.setItem('isShortFilmChecked', isChecked.toString());
-  }, [isChecked]);
+function FilterCheckbox({ isChecked, onCheckboxChange, isSearching }) {
 
   const handleCheckboxChange = (evt) => {
     const isChecked = evt.target.checked;
-    setIsChecked(isChecked);
     onCheckboxChange(isChecked);
   };
 

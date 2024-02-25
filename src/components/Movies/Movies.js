@@ -13,20 +13,20 @@ function Movies({ isAuth }) {
   const [movies, setMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [notFoundMessage, setNotFoundMessage] = useState('');
-  const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
+  const [isShortFilmChecked, setIsShortFilmChecked] = useState(localStorage.getItem('isShortFilmChecked') === 'true');
   const [searchQuery, setSearchQuery] = useState(localStorage.getItem('searchQuery') || '');
   const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
+    localStorage.setItem('isShortFilmChecked', isShortFilmChecked.toString());
+  }, [isShortFilmChecked]);
+
+  useEffect(() => {
     const storedSearchQuery = localStorage.getItem('searchQuery');
-    const storedIsShortFilmChecked = localStorage.getItem('isShortFilmChecked');
     const storedMovies = JSON.parse(localStorage.getItem('movies'));
 
     if (storedSearchQuery) {
       setSearchQuery(storedSearchQuery);
-    }
-    if (storedIsShortFilmChecked !== null && storedIsShortFilmChecked === 'true') {
-      setIsShortFilmChecked(true);
     }
 
     if (storedMovies && storedMovies.length > 0) {
@@ -98,7 +98,7 @@ function Movies({ isAuth }) {
       <Header authorized={isAuth} />
       <main className='movies-main'>
         <SearchForm onSearch={handleSearchFormSubmit} searchQuery={searchQuery} isSearching={isSearching} />
-        <FilterCheckbox onCheckboxChange={handleCheckboxChange} isSearching={isSearching} />
+        <FilterCheckbox isChecked={isShortFilmChecked} isSearching={isSearching} onCheckboxChange={handleCheckboxChange} />
         {isLoading ?
           <Preloader /> :
           (errorMessage ?

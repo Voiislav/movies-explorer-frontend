@@ -37,6 +37,17 @@
   opacity: 0.6;
 }
 
+.search__submit_disabled {
+  cursor: default;
+  opacity: 0.6;
+  transition: none;
+}
+
+.search__submit_disabled:hover {
+  opacity: 0.6;
+  transition: none;
+}
+
 @media screen and (max-width: 768px) {
   .search {
     padding-top: 80px;

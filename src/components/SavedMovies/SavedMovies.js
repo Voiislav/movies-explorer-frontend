@@ -42,7 +42,7 @@ function SavedMovies({ isAuth, currentUser }) {
 
 
   const handleSearch = (query, isShortFilmChecked) => {
-    setIsLoading(false);
+    setIsLoading(true);
     let filteredMovies = initialSavedMovies.filter((movie) => {
       const nameRU = movie.nameRU.toLowerCase();
       const nameEN = movie.nameEN.toLowerCase();
@@ -54,6 +54,7 @@ function SavedMovies({ isAuth, currentUser }) {
       filteredMovies = filteredMovies.filter(movie => movie.duration <= 40);
     }
 
+    setIsLoading(false);
     setSavedMovies(filteredMovies);
 
     if (filteredMovies.length === 0) {

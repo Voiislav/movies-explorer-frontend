@@ -15,6 +15,7 @@ function Movies({ isAuth }) {
   const [notFoundMessage, setNotFoundMessage] = useState('');
   const [isShortFilmChecked, setIsShortFilmChecked] = useState(false);
   const [searchQuery, setSearchQuery] = useState(localStorage.getItem('searchQuery') || '');
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     const storedSearchQuery = localStorage.getItem('searchQuery');
@@ -42,9 +43,11 @@ function Movies({ isAuth }) {
 
   const handleSearch = (query, isShortFilmChecked) => {
     setIsLoading(true);
+    setIsSearching(true);
     moviesApi.getAllMovies()
       .then((moviesData) => {
         setIsLoading(false);
+        setIsSearching(false);
         let filteredMovies = moviesData.filter((movie) => {
           const nameRU = movie.nameRU.toLowerCase();
           const nameEN = movie.nameEN.toLowerCase();
@@ -68,6 +71,7 @@ function Movies({ isAuth }) {
       })
       .catch((error) => {
         setIsLoading(false);
+        setIsSearching(false);
         setErrorMessage(
           'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
         );
@@ -92,7 +96,7 @@ function Movies({ isAuth }) {
     <>
       <Header authorized={isAuth} />
       <main className='movies-main'>
-        <SearchForm onSearch={handleSearchFormSubmit} searchQuery={searchQuery} />
+        <SearchForm onSearch={handleSearchFormSubmit} searchQuery={searchQuery} isSearching={isSearching} />
         <FilterCheckbox onCheckboxChange={handleCheckboxChange} />
         {isLoading ?
           <Preloader /> :

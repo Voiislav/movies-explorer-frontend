@@ -1,7 +1,7 @@
 import './SearchForm.css';
 import { useState } from 'react';
 
-function SearchForm({ onSearch, searchQuery }) {
+function SearchForm({ onSearch, searchQuery, isSearching }) {
   const [searchValue, setSearchValue] = useState(searchQuery || '');
 
   const handleChange = (event) => {
@@ -24,7 +24,7 @@ function SearchForm({ onSearch, searchQuery }) {
         onChange={handleChange}
         required
       />
-      <button type="submit" aria-label="Искать фильм" className='search__submit'>Найти</button>
+      <button type="submit" aria-label="Искать фильм" className={`search__submit ${isSearching ? 'search__submit_disabled' : ''}`} disabled={isSearching}>Найти</button>
     </form>
   );
 };

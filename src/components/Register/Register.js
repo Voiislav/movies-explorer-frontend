@@ -42,10 +42,10 @@ function Register({ setIsAuth }) {
               setSubmitError("Произошла ошибка при регистрации: пользователь не авторизован");
             })
             .finally(() => {
-              setIsLoading(false); // Устанавливаем isLoading в false независимо от результата авторизации
+              setIsLoading(false);
             });
         } else {
-          setIsLoading(false); // Устанавливаем isLoading в false в случае ошибки регистрации
+          setIsLoading(false);
         }
       })
       .catch((err) => {
@@ -65,7 +65,7 @@ function Register({ setIsAuth }) {
             break;
         }
         setSubmitError(errorMessage);
-        setIsLoading(false); // Устанавливаем isLoading в false в случае ошибки запроса
+        setIsLoading(false);
       });
   };
 

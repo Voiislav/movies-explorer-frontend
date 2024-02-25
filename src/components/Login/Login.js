@@ -2,6 +2,7 @@ import Auth from '../Auth/Auth';
 import * as auth from "../../auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import Preloader from '../Preloader/Preloader';
 
 function Login({ setIsAuth }) {
   const [formValue, setFormValue] = useState({
@@ -12,6 +13,7 @@ function Login({ setIsAuth }) {
   const navigate = useNavigate();
 
   const [submitError, setSubmitError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (evt) => {
     const { name, value } = evt.target;
@@ -23,7 +25,9 @@ function Login({ setIsAuth }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setIsLoading(true);
     if (!formValue.email || !formValue.password) {
+      setIsLoading(false);
       return;
     }
     auth
@@ -52,10 +56,16 @@ function Login({ setIsAuth }) {
             break;
         }
         setSubmitError(errorMessage);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   return (
+    isLoading ? 
+    <Preloader /> 
+    :
     <Auth
     handleSubmit={handleSubmit}
     handleChange={handleChange}

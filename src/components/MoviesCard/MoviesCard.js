@@ -16,10 +16,6 @@ function MoviesCard({ movie, onDeleteMovie, isSaved }) {
     setIsSavedLocal(isSaved);
   }, [isSaved]);
 
-  const toggleLike = () => {
-    setIsSavedLocal(!isSavedLocal);
-  };
-
   const token = localStorage.getItem('token');
   const handleSave = () => {
     mainApi.getSavedMovies(token)
@@ -29,7 +25,6 @@ function MoviesCard({ movie, onDeleteMovie, isSaved }) {
         mainApi.deleteMovie(savedMovie._id, token)
         .then((deletedMovie) => {
           console.log(deletedMovie);
-          toggleLike();
           setIsSavedLocal(false);
         })
         .catch((error) => {
@@ -39,7 +34,6 @@ function MoviesCard({ movie, onDeleteMovie, isSaved }) {
         mainApi.saveMovie(movie, token)
         .then((savedMovie) => {
           console.log(savedMovie);
-          toggleLike();
           setIsSavedLocal(true);
         })
         .catch((error) => {
@@ -57,7 +51,6 @@ function MoviesCard({ movie, onDeleteMovie, isSaved }) {
     mainApi.deleteMovie(movie._id, token)
     .then((deletedMovie) => {
       console.log(deletedMovie);
-      toggleLike();
       setIsSavedLocal(false);
       onDeleteMovie(movie._id);
     })

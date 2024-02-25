@@ -54,7 +54,7 @@
   opacity: 0;
 }
 
-.movie__button_delete:hover {
+.movie:hover .movie__button_delete {
   opacity: 1;
 }
 

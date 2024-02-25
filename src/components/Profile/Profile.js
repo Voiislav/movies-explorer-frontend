@@ -58,6 +58,7 @@ function Profile({ setIsAuth, isAuth }) {
 
   const handleEditProfile = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     mainApi.setNewUserData({
       name: name,
       email: email,
@@ -67,9 +68,11 @@ function Profile({ setIsAuth, isAuth }) {
         setSuccessMessage('Данные профиля успешно обновлены.')
         setOriginalName(name);
         setOriginalEmail(email);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('Ошибка при обновлении данных профиля:', error);
+        setIsLoading(false);
       });
   };
 

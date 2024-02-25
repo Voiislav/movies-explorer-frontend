@@ -97,7 +97,7 @@ function Movies({ isAuth }) {
       <Header authorized={isAuth} />
       <main className='movies-main'>
         <SearchForm onSearch={handleSearchFormSubmit} searchQuery={searchQuery} isSearching={isSearching} />
-        <FilterCheckbox onCheckboxChange={handleCheckboxChange} />
+        <FilterCheckbox onCheckboxChange={handleCheckboxChange} isSearching={isSearching} />
         {isLoading ?
           <Preloader /> :
           (errorMessage ?

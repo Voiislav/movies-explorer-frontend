@@ -66,12 +66,14 @@ function Profile({ setIsAuth, isAuth }) {
     }, localStorage.getItem('token'))
       .then((data) => {
         console.log('Данные профиля успешно обновлены:', data);
-        setSuccessMessage('Данные профиля успешно обновлены.')
+        setSuccessMessage('Данные профиля успешно обновлены.');
+        setSubmitError('');
         setOriginalName(name);
         setOriginalEmail(email);
         setIsLoading(false);
       })
       .catch((error) => {
+        setSuccessMessage('')
         console.error('Ошибка при обновлении данных профиля:', error);
         if (error.response && error.response.status === 500) {
           setSubmitError('Произошла ошибка сервера при обновлении данных профиля.');
@@ -140,7 +142,7 @@ function Profile({ setIsAuth, isAuth }) {
         ) : (
           <>
             <h1 className='profile__greeting'>Привет, {name}!</h1>
-            <p className='profile__message'>{successMessage}</p>
+            {successMessage && <p className='profile__message'>{successMessage}</p>}
             {submitError && <p className='profile__message profile__message_error'>{submitError}</p>}
             <form className='profile__edit' onSubmit={handleEditProfile}>
               <div className='profile__inputs-area profile__inputs-area_top'>

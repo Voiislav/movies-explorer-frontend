@@ -2,6 +2,7 @@ import Auth from '../Auth/Auth';
 import * as auth from "../../auth";
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Preloader from '../Preloader/Preloader';
 
 function Register({ setIsAuth }) {
   const [formValue, setFormValue] = useState({
@@ -11,6 +12,7 @@ function Register({ setIsAuth }) {
   });
 
   const [submitError, setSubmitError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -24,6 +26,7 @@ function Register({ setIsAuth }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setIsLoading(true);
     auth
       .register(formValue.email, formValue.password, formValue.name)
       .then((res) => {
@@ -37,7 +40,12 @@ function Register({ setIsAuth }) {
             })
             .catch((err) => {
               setSubmitError("Произошла ошибка при регистрации: пользователь не авторизован");
+            })
+            .finally(() => {
+              setIsLoading(false); // Устанавливаем isLoading в false независимо от результата авторизации
             });
+        } else {
+          setIsLoading(false); // Устанавливаем isLoading в false в случае ошибки регистрации
         }
       })
       .catch((err) => {
@@ -57,10 +65,14 @@ function Register({ setIsAuth }) {
             break;
         }
         setSubmitError(errorMessage);
+        setIsLoading(false); // Устанавливаем isLoading в false в случае ошибки запроса
       });
-  }
+  };
 
   return (
+    isLoading ? 
+    <Preloader /> 
+    :
     <Auth
       handleSubmit={handleSubmit}
       titleText='Добро пожаловать!'

@@ -6,7 +6,7 @@ import heartIconClicked from '../../images/heart-icon-clicked.svg';
 import { useLocation } from 'react-router-dom';
 import mainApi from '../../utils/MainApi';
 
-function MoviesCard({ movie, onDeleteMovie, isSaved, saveMovies }) {
+function MoviesCard({ movie, onDeleteMovie, isSaved, savedMovies }) {
   const location = useLocation();
   const isSavedMoviesRoute = location.pathname === '/saved-movies';
 
@@ -21,7 +21,7 @@ function MoviesCard({ movie, onDeleteMovie, isSaved, saveMovies }) {
 
   const token = localStorage.getItem('token');
   const handleSave = () => {
-    const savedMovie = saveMovies.find(saved => saved.nameRU === movie.nameRU);
+    const savedMovie = savedMovies.find(saved => saved.nameRU === movie.nameRU);
     if (savedMovie) {
       mainApi.deleteMovie(savedMovie._id, token)
         .then((deletedMovie) => {

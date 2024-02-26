@@ -36,6 +36,11 @@ function MoviesCardList({ movies, onDeleteMovie }) {
         });
   }, []);
 
+  const updateSavedMovies = (newSavedMovies) => {
+    setSavedMovies(newSavedMovies);
+    console.log(newSavedMovies);
+  }
+
 
   const handleLoadMore = () => {
     setVisibleCards(prevVisibleCards => prevVisibleCards + (window.innerWidth <= 768 ? 2 : 4));
@@ -64,6 +69,7 @@ function MoviesCardList({ movies, onDeleteMovie }) {
             onDeleteMovie={onDeleteMovie}
             isSaved={savedMovies.some(savedMovie => savedMovie.nameRU === movie.nameRU)}
             savedMovies={savedMovies}
+            updateSavedMovies={updateSavedMovies}
           />
         ))}
       </ul>

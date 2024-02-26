@@ -6,23 +6,24 @@ import heartIconClicked from '../../images/heart-icon-clicked.svg';
 import { useLocation } from 'react-router-dom';
 import mainApi from '../../utils/MainApi';
 
-function MoviesCard({ movie, onDeleteMovie, isSaved }) {
+function MoviesCard({ movie, onDeleteMovie, isSaved, saveMovies }) {
   const location = useLocation();
   const isSavedMoviesRoute = location.pathname === '/saved-movies';
 
+  
   const [isSavedLocal, setIsSavedLocal] = useState(isSaved);
+
 
   useEffect(() => {
     setIsSavedLocal(isSaved);
   }, [isSaved]);
 
+
   const token = localStorage.getItem('token');
   const handleSave = () => {
-    mainApi.getSavedMovies(token)
-    .then((moviesData) => {
-      const savedMovie = moviesData.find(saved => saved.nameRU === movie.nameRU);
-      if(savedMovie) {
-        mainApi.deleteMovie(savedMovie._id, token)
+    const savedMovie = saveMovies.find(saved => saved.nameRU === movie.nameRU);
+    if (savedMovie) {
+      mainApi.deleteMovie(savedMovie._id, token)
         .then((deletedMovie) => {
           console.log(deletedMovie);
           setIsSavedLocal(false);
@@ -30,8 +31,8 @@ function MoviesCard({ movie, onDeleteMovie, isSaved }) {
         .catch((error) => {
           console.error(error);
         })
-      } else {
-        mainApi.saveMovie(movie, token)
+    } else {
+      mainApi.saveMovie(movie, token)
         .then((savedMovie) => {
           console.log(savedMovie);
           setIsSavedLocal(true);
@@ -39,24 +40,20 @@ function MoviesCard({ movie, onDeleteMovie, isSaved }) {
         .catch((error) => {
           console.error(error)
         })
-      }
-    })
-    .catch((error) => {
-      console.error(error)
-    })
+    }
   }
-  
+
 
   const handleDelete = () => {
     mainApi.deleteMovie(movie._id, token)
-    .then((deletedMovie) => {
-      console.log(deletedMovie);
-      setIsSavedLocal(false);
-      onDeleteMovie(movie._id);
-    })
-    .catch((error) => {
-      console.error(error);
-    })
+      .then((deletedMovie) => {
+        console.log(deletedMovie);
+        setIsSavedLocal(false);
+        onDeleteMovie(movie._id);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
   }
 
   const movieButton = isSavedMoviesRoute ? (

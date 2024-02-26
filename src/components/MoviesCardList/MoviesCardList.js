@@ -63,6 +63,7 @@ function MoviesCardList({ movies, onDeleteMovie }) {
             image={movie.image}
             onDeleteMovie={onDeleteMovie}
             isSaved={savedMovies.some(savedMovie => savedMovie.nameRU === movie.nameRU)}
+            savedMovies={savedMovies}
           />
         ))}
       </ul>

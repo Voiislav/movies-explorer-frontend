@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import './MoviesCard.css';
 import heartIcon from '../../images/heart-icon.svg';
 import deleteIcon from '../../images/delete-icon.svg';
@@ -6,38 +5,27 @@ import heartIconClicked from '../../images/heart-icon-clicked.svg';
 import { useLocation } from 'react-router-dom';
 import mainApi from '../../utils/MainApi';
 
-function MoviesCard({ movie, onDeleteMovie, isSaved, savedMovies, updateSavedMovies }) {
+function MoviesCard({ movie, onDeleteMovie, handleSaveMovie }) {
   const location = useLocation();
   const isSavedMoviesRoute = location.pathname === '/saved-movies';
 
-  
-  const [isSavedLocal, setIsSavedLocal] = useState(isSaved);
-
-
-  useEffect(() => {
-    setIsSavedLocal(isSaved);
-  }, [isSaved]);
-
-
   const token = localStorage.getItem('token');
+
   const handleSave = () => {
-    const savedMovie = savedMovies.find(saved => saved.nameRU === movie.nameRU);
-    if (savedMovie) {
-      mainApi.deleteMovie(savedMovie._id, token)
-        .then((deletedMovie) => {
-          console.log(deletedMovie);
-          setIsSavedLocal(false);
-          updateSavedMovies(savedMovies.filter(saved => saved.nameRU !== movie.nameRU));
+    if (movie.isSaved) {
+      console.log(movie);
+      mainApi.deleteMovie(movie._id, token)
+        .then(() => {
+          handleSaveMovie(movie, true);
         })
         .catch((error) => {
           console.error(error);
         })
     } else {
       mainApi.saveMovie(movie, token)
-        .then((savedMovie) => {
-          console.log(savedMovie);
-          setIsSavedLocal(true);
-          updateSavedMovies([...savedMovies, savedMovie]);
+        .then((sm) => {
+          movie._id = sm.data._id;
+          handleSaveMovie(movie, false);
         })
         .catch((error) => {
           console.error(error)
@@ -50,7 +38,6 @@ function MoviesCard({ movie, onDeleteMovie, isSaved, savedMovies, updateSavedMov
     mainApi.deleteMovie(movie._id, token)
       .then((deletedMovie) => {
         console.log(deletedMovie);
-        setIsSavedLocal(false);
         onDeleteMovie(movie._id);
       })
       .catch((error) => {
@@ -64,7 +51,7 @@ function MoviesCard({ movie, onDeleteMovie, isSaved, savedMovies, updateSavedMov
     </button>
   ) : (
     <button className='movie__button' type='button' aria-label='Сохранить' onClick={handleSave}>
-      {isSavedLocal ? (
+      {movie.isSaved ? (
         <img src={heartIconClicked} alt='иконка сердечка' />
       ) : (
         <img src={heartIcon} alt='иконка сердечка' />

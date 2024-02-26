@@ -2,12 +2,10 @@ import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import mainApi from '../../utils/MainApi';
 
-function MoviesCardList({ movies, onDeleteMovie }) {
+function MoviesCardList({ movies, onDeleteMovie, handleSaveMovie }) {
   const location = useLocation();
   const isMoviesRoute = location.pathname === '/movies';
-  const isSavedMoviesRoute = location.pathname === '/saved-movies';
 
 
   const calculateVisibleCards = () => {
@@ -23,24 +21,6 @@ function MoviesCardList({ movies, onDeleteMovie }) {
 
 
   const [visibleCards, setVisibleCards] = useState(calculateVisibleCards());
-  const [savedMovies, setSavedMovies] = useState([]);
-
-
-  useEffect(() => {
-      mainApi.getSavedMovies(localStorage.getItem('token'))
-        .then((savedMovies) => {
-          setSavedMovies(savedMovies);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-  }, []);
-
-  const updateSavedMovies = (newSavedMovies) => {
-    setSavedMovies(newSavedMovies);
-    console.log(newSavedMovies);
-  }
-
 
   const handleLoadMore = () => {
     setVisibleCards(prevVisibleCards => prevVisibleCards + (window.innerWidth <= 768 ? 2 : 4));
@@ -58,6 +38,8 @@ function MoviesCardList({ movies, onDeleteMovie }) {
     };
   }, []);
 
+
+
   return (
     <section className='movies'>
       <ul className='movies__list'>
@@ -67,9 +49,7 @@ function MoviesCardList({ movies, onDeleteMovie }) {
             movie={movie}
             image={movie.image}
             onDeleteMovie={onDeleteMovie}
-            isSaved={savedMovies.some(savedMovie => savedMovie.nameRU === movie.nameRU)}
-            savedMovies={savedMovies}
-            updateSavedMovies={updateSavedMovies}
+            handleSaveMovie={handleSaveMovie}
           />
         ))}
       </ul>

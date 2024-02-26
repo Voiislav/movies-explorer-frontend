@@ -7,6 +7,7 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import moviesApi from '../../utils/MoviesApi';
+import mainApi from '../../utils/MainApi';
 
 function Movies({ isAuth }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +32,7 @@ function Movies({ isAuth }) {
 
     if (storedMovies && storedMovies.length > 0) {
       setMovies(storedMovies);
+      console.log(storedMovies)
     } else {
       setNotFoundMessage('');
     }
@@ -59,10 +61,24 @@ function Movies({ isAuth }) {
         if (isShortFilmChecked) {
           filteredMovies = filteredMovies.filter(movie => movie.duration <= 40);
         }
-
-        setMovies(filteredMovies);
-
-        localStorage.setItem('movies', JSON.stringify(filteredMovies));
+        mainApi.getSavedMovies(localStorage.getItem('token'))
+          .then((savedMovies) => {
+            filteredMovies = filteredMovies.map(m => {
+              const savedMovie = savedMovies.filter(sm => sm.nameRU === m.nameRU)[0]
+              if (savedMovie) {
+                m.isSaved = true
+                m._id = savedMovie._id
+              } else {
+                m.isSaved = false
+              }
+              return m
+            })
+            setMovies(filteredMovies);
+            localStorage.setItem('movies', JSON.stringify(filteredMovies));
+          })
+          .catch((error) => {
+            console.error(error);
+          });
 
         if (filteredMovies.length === 0) {
           setNotFoundMessage('Ничего не найдено');
@@ -79,6 +95,20 @@ function Movies({ isAuth }) {
         console.error(error);
       });
   };
+
+  const handleSaveMovie = (newMovie, isDeleteOperation) => {
+    let cloneAllMovies = JSON.parse(JSON.stringify(movies));
+    if (!isDeleteOperation) {
+      console.log(newMovie);
+      newMovie.isSaved = true;
+    } else {
+      newMovie.isSaved = false;
+      console.log(newMovie);
+    }
+    cloneAllMovies = cloneAllMovies.map(m => m.nameRU === newMovie.nameRU ? newMovie : m);
+    setMovies(cloneAllMovies);
+    localStorage.setItem('movies', JSON.stringify(cloneAllMovies));
+  }
 
 
   const handleCheckboxChange = (isChecked) => {
@@ -105,7 +135,7 @@ function Movies({ isAuth }) {
             <p className='movies-main__error'>{errorMessage}</p> :
             (notFoundMessage ?
               <p className='movies-main__error'>{notFoundMessage}</p> :
-              <MoviesCardList movies={movies} />))}
+              <MoviesCardList movies={movies} handleSaveMovie={handleSaveMovie} />))}
       </main>
       <Footer />
     </>
